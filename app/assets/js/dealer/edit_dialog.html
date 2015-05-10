@@ -1,0 +1,77 @@
+<h4>Dealer</h4>
+  <div class="form-group">
+    <label for="dealerName" class="col-sm-2 control-label">Name</label>
+    <div class="col-sm-8">
+      <input class="form-control" id="dealerName" type="text" ng-model="dealer.name" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="dealerType" class="col-sm-2 control-label">Type</label>
+    <div class="col-sm-8">
+      <select class="form-control" id="dealerType" ng-model="dealer.type">
+        <option>bar</option>
+        <option>retail</option>
+        <option>club</option>
+        <option>restaurant</option>
+        <option>hackerspace</option>
+        <option>other</option>
+      </select>
+    </div>
+  </div>
+  <h4>Address</h4>
+  <div class="form-group">
+    <label for="addressStreet" class="col-sm-2 control-label">Street</label>
+    <div class="col-sm-8">
+      <input class="form-control" id="addressStreet" type="text" ng-model="dealer.address.street" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="addressStreet" class="col-sm-2 control-label">Number</label>
+    <div class="col-sm-8">
+      <input class="form-control" id="addressNumber" type="text" ng-model="dealer.address.number" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="addressPostal" class="col-sm-2 control-label">ZIP</label>
+    <div class="col-sm-8">
+      <input class="form-control" id="addressPostal" type="text" ng-model="dealer.address.postal" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="addressCity" class="col-sm-2 control-label">City</label>
+    <div class="col-sm-8">
+      <input class="form-control" id="addressCity" type="text" ng-model="dealer.address.city" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="addressCountry" class="col-sm-2 control-label">Country</label>
+    <div class="col-sm-8">
+      <input class="form-control" id="addressCountry" type="text" ng-model="dealer.address.country" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="addressPhone" class="col-sm-2 control-label">Phone</label>
+    <div class="col-sm-8">
+      <input class="form-control" id="addressPhone" type="text" ng-model="dealer.address.phone" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="addressEmail" class="col-sm-2 control-label">Email</label>
+    <div class="col-sm-8">
+      <input class="form-control" id="addressEmail" type="text" ng-model="dealer.address.email" />
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="addressWeb" class="col-sm-2 control-label">Web</label>
+    <div class="col-sm-8">
+      <input class="form-control" id="addressWeb" type="text" ng-model="dealer.address.web" />
+    </div>
+  </div>
+  <ul>
+    <li ng-repeat="entry in stock">
+      {{entry.product.name}} - {{entry.status}} {{entry.price}} / {{entry.quantity}}
+    </li>
+  </ul>
+
+
+

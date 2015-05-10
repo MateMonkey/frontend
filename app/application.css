@@ -1,0 +1,55 @@
+/*
+ *= require_self
+ *= require bootstrap
+ *= require leaflet
+ *= require leaflet.markercluster
+ */
+
+html, body, #container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  padding-top: 50px;
+}
+
+#map {
+  width: auto;
+  height: 100%;
+}
+
+#infobar {
+  width: 450px;
+  height: 100%;
+  max-width: 100%;
+  float: left;
+  -webkit-transition: all 0.4s ease-out;
+  -moz-transition: all 0.4s ease-out;
+  transition: all 0.4s ease-out;
+}
+
+#infobar {
+  padding: 10px;
+}
+
+.label-unknown {
+  background-color: #aaaaaa;
+}
+
+.label-sold-out {
+  background-color: #E60700;
+}
+
+.label-low {
+  background-color: #F28900;
+}
+
+.label-full {
+  background-color: #06AD00;
+}
+
+.label-discontinued {
+  background-color: #A700AD;
+}

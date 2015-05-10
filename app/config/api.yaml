@@ -1,0 +1,5 @@
+development:
+  base_url: http://127.0.0.1:3000
+
+production:
+  base_url: http://matemonkey.com
