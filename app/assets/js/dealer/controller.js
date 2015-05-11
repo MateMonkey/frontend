@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap", "dialogs.main"])
-.controller('DealerController', function($scope, $http, DealerService, dialogs, urlfor) {
+.controller('DealerController', function($scope, $http, $location, DealerService, dialogs, urlfor) {
+  $scope.showDiscontinued = false;
   $scope.reloadStock = function() {
     $http({
       method: "GET",
@@ -13,14 +14,16 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
       $scope.stock = data['entries'];
     });
   };
-  $scope.$on('DealerChanged', function(event, d) {
+
+  $scope.$on('DealerSelected', function(event, d) {
     $scope.dealer = d;
+    $location.path('/map/dealer/'+d.slug);
     $scope.reloadStock();
   });
+
   $scope.updateStock = function(dealer, stock) {
     var data = null
-    if ((typeof stock.price == "undefined") ||
-        (stock.price == 0)) {
+    if ((typeof stock.price == "undefined")) {
       data = {
         status: stock.status,
         product: stock.product,
@@ -44,7 +47,29 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
     });
   };
 
-  $scope.showUpdateStock = function(which) {
+  $scope.updateDealer = function(dealer) {
+    $http({
+      url: urlfor.get("updateDealer", dealer.id),
+      method: "PUT",
+      data: dealer
+    }).success(function(data) {
+      $scope.dealer = data;
+      DealerService.update(data);
+    });
+  }
+
+  $scope.createDealer = function(dealer) {
+    $http({
+      url: urlfor.get("dealers"),
+      method: "POST",
+      data: dealer
+    }).success(function(data) {
+      $scope.dealer = dealer;
+      DealerService.create(data);
+    });
+  }
+
+  $scope.showUpdateStock = function() {
     var dlg = dialogs.create('js/dealer/update_stock.html', 'UpdateStockController', $scope.dealer, 'lg');
     dlg.result.then(function(data){
       if (data.save == true) {
@@ -52,6 +77,66 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
       }
     });
   };
+
+  $scope.showEditDealer = function() {
+    var dlg = dialogs.create('js/dealer/edit_dealer.html', 'EditDealerController', angular.copy($scope.dealer), 'lg');
+    dlg.result.then(function(data) {
+      if (data.save == true) {
+        $scope.updateDealer(data.dealer);
+      }
+    });
+  };
+
+  $scope.createNewDealer = function() {
+    var dlg = dialogs.create('js/dealer/edit_dealer.html', 'EditDealerController', null, 'lg');
+    dlg.result.then(function(data) {
+      if (data.save == true) {
+        $scope.createDealer(data.dealer);
+      }
+    });
+  };
+})
+.controller('EditDealerController', function($scope, $http, $modalInstance, data, urlfor){
+  $scope.typeOptions = [
+    {
+      displayText: "Retail",
+      value: "retail"
+    },
+    {
+      displayText: "Club",
+      value: "club"
+    },
+    {
+      displayText: "Bar",
+      value: "bar"
+    },
+    {
+      displayText: "Restaurant",
+      value: "restaurant"
+    },
+    {
+      displayText: "Hackerspace",
+      value: "hackerspace"
+    },
+    {
+      displayText: "Other",
+      value: "other"
+    }
+  ];
+  if (data == null) {
+    $scope.dealer = {};
+    $scope.title = "Create new dealer"
+  } else {
+    $scope.dealer = data;
+    $scope.title = "Update " + $scope.dealer.name;
+  }
+  $scope.save = function() {
+    $modalInstance.close({save: true , dealer: $scope.dealer});
+  };
+  $scope.cancel = function(){
+    $modalInstance.close({save: false, dealer: null});
+  };
+
 })
 .controller('UpdateStockController',function($scope, $http, $modalInstance, data, urlfor){
   $scope.statusOptions = [
@@ -106,12 +191,17 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
 .service('DealerService', function($rootScope) {
   var dealer = null;
   return {
-    set : function(x) {
-      dealer = x;
-      $rootScope.$broadcast('DealerChanged', x);
+    select: function(d) {
+      $rootScope.$broadcast('DealerSelected', d);
     },
-    get : function() {
-      return dealer;
+    focus: function(d) {
+      $rootScope.$broadcast('DealerFocused', d);
+    },
+    update: function(d) {
+      $rootScope.$broadcast('DealerUpdated', d);
+    },
+    create: function(d) {
+      $rootScope.$broadcast('DealerCreated', d);
     }
   }
 });

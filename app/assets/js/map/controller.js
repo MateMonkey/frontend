@@ -6,42 +6,131 @@ angular.module('matemonkey.map',
                  'leaflet-directive'
                ])
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/map', {
+  $routeProvider.when('/map/', {
     templateUrl: 'js/map/view.html',
-    controller: 'MapController'
+    controller: 'MapController',
+    reloadOnSearch: false
+  });
+  $routeProvider.when('/map/dealer/:dealer_slug', {
+    templateUrl: 'js/map/view.html',
+    controller: 'MapController',
+    reloadOnSearch: false
   });
 }])
 
-.controller('MapController', function($scope, $http, DealerService, leafletBoundsHelpers, urlfor) {
-  var dealerToMarker = function(dealers) {
+.controller('MapController', function($scope, $http, $routeParams, DealerService, leafletBoundsHelpers, urlfor) {
+  $scope.dealerToMarker = function(dealers) {
     return dealers.map(function(dealer) {
       return {
         layer: 'dealers',
         dealer: dealer,
         lat: dealer['address']['lat'],
-        lng: dealer['address']['lon']
+        lng: dealer['address']['lon'],
+        icon: $scope.icons[dealer.type]
       };
     });
   };
-
-  var loadDealers = function() {
+  $scope.ready = false;
+  $scope.loadDealers = function() {
+    var requestBounds = angular.copy($scope.bounds);
+    if (requestBounds.southWest.lat < -90.00) {
+      requestBounds.southWest.lat = -90.00;
+    }
+    if (requestBounds.southWest.lat > 90.00) {
+      requestBounds.southWest.lat = 90.00;
+    }
+    if (requestBounds.southWest.lng < -180.00) {
+      requestBounds.southWest.lng = -180.00;
+    }
+    if (requestBounds.southWest.lng > 180.00) {
+      requestBounds.southWest.lng = 180.00;
+    }
+    if (requestBounds.northEast.lat < -90.00) {
+      requestBounds.northEast.lat = -90.00;
+    }
+    if (requestBounds.northEast.lat > 90.00) {
+      requestBounds.northEast.lat = 90.00;
+    }
+    if (requestBounds.northEast.lng < -180.00) {
+      requestBounds.northEast.lng = -180.00;
+    }
+    if (requestBounds.northEast.lng > 180.00) {
+      requestBounds.northEast.lng = 180.00;
+    }
     $http({
         url: urlfor.get("dealers"),
         method: "GET",
-        params: {bbox: $scope.bounds.southWest.lat + "," +
-                       $scope.bounds.southWest.lng + "," +
-                       $scope.bounds.northEast.lat + "," +
-                       $scope.bounds.northEast.lng,
+        params: {bbox: requestBounds.southWest.lat + "," +
+                       requestBounds.southWest.lng + "," +
+                       requestBounds.northEast.lat + "," +
+                       requestBounds.northEast.lng,
                 type: $scope.types}
       }).success(function(data) {
-        $scope.markers = dealerToMarker(data['dealers']);
+        $scope.markers = $scope.dealerToMarker(data['dealers']);
       });
   };
-  var bounds = leafletBoundsHelpers.createBoundsFromArray([
-    [ 0, 0 ],
-    [ 0, 0 ]
-  ]);
+
+  $scope.defaultCenter = {
+    lat: 48.13722,
+    lng: 11.575556,
+    zoom: 10
+  };
+  $scope.center = $scope.defaultCenter;
+
+  if ($routeParams.hasOwnProperty('dealer_slug')) {
+    $http({
+      url: urlfor.get("dealersSlug", $routeParams.dealer_slug),
+      method: "GET"
+    }).success(function(dealer) {
+      DealerService.select(dealer);
+      $scope.center = {
+        zoom: 18,
+        lat: dealer.address.lat,
+        lng: dealer.address.lon,
+        autoDiscover: false
+      };
+      $scope.ready = true;
+    }).error(function() {
+      $scope.center = $scope.defaultCenter;
+      $scope.center.autoDiscover = true;
+      $scope.ready = true;
+    });
+  } else {
+    $scope.ready = true;
+  }
   angular.extend($scope, {
+    icons: {
+      retail : {
+        type: 'awesomeMarker',
+        icon: 'shopping-cart',
+        markerColor: 'green'
+      },
+      restaurant: {
+        type: 'awesomeMarker',
+        icon: 'cutlery',
+        markerColor: 'orange'
+      },
+      bar: {
+        type: 'awesomeMarker',
+        icon: 'glass',
+        markerColor: 'red'
+      },
+      club: {
+        type: 'awesomeMarker',
+        icon: 'cd',
+        markerColor: 'purple'
+      },
+      hackerspace: {
+        type: 'awesomeMarker',
+        icon: 'glyphicon icon-glider',
+        markerColor: 'blue'
+      },
+      other: {
+        type: 'awesomeMarker',
+        icon: 'info-sign',
+        markerColor: 'darkgreen'
+      }
+    },
     layers: {
       baselayers: {
         osm: {
@@ -63,20 +152,17 @@ angular.module('matemonkey.map',
       }
     },
     defaults: {
+      zoomControlPosition: 'topright',
       controls: {
         layers: {
           visible: false,
         }
       }
-    },
-    center: {
-      autoDiscover: true
-    },
-    bounds : bounds
+    }
   });
 
   $scope.$on('leafletDirectiveMarker.click', function (e, args) {
-    DealerService.set(args['model'].dealer);
+    DealerService.select(args['model'].dealer);
   });
 
   $scope.$on('FilterChanged',function(event, f) {
@@ -94,12 +180,32 @@ angular.module('matemonkey.map',
         }
       });
     }
+    if ($scope.ready == true) {
+      $scope.markers = {};
+      $scope.loadDealers();
+    }
+  });
+  $scope.$on('DealerCreated', function(event, d) {
+    angular.extend($scope.markers, $scope.dealerToMarker([d]));
+  });
+  $scope.$on('DealerUpdated', function(event, d) {
+    /* Doesn't work at the moment
+    for (var i = 0; i < $scope.markers.length; i++) {
+      if ($scope.markers[i].dealer.id == d.id) {
+        $scope.markers.splice(i, 1, $scope.dealerToMarker([d])[0]);
+        console.log("Updated");
+        break;
+      }
+    }
+    */
     $scope.markers = {};
-    loadDealers();
+    $scope.loadDealers();
   });
   $scope.$watch('bounds', function(newVal, oldVal) {
-    $scope.markers = {};
-    loadDealers();
+    if ($scope.ready == true) {
+      $scope.markers = {};
+      $scope.loadDealers();
+    }
   });
 });
 

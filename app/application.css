@@ -34,6 +34,11 @@ body {
   padding: 10px;
 }
 
+#infoBarHideButton {
+  z-index: 1;
+  position: relative;
+}
+
 .label-unknown {
   background-color: #aaaaaa;
 }
@@ -52,4 +57,29 @@ body {
 
 .label-discontinued {
   background-color: #A700AD;
+}
+
+@font-face {
+  font-family: 'glider';
+  src:url('../fonts/glider.eot?-oc9wue');
+  src:url('../fonts/glider.eot?#iefix-oc9wue') format('eotmbedded-opentype'),
+      url('../fonts/glider.woff?-oc9wue') format('woff'),
+      url('../fonts/glider.ttf?-oc9wue') format('truetype'),
+      url('../fonts/glider.svg?-oc9wue#glider') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.icon-glider:before {
+  font-family: 'glider';
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  content: "\e600";
+}
+
+@media screen and (min-width: 768px) {
+  #mainNavBar.collapse {
+    display: block !important;
+  }
 }

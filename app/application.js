@@ -5,9 +5,12 @@ var app = angular.module('matemonkey',
                             'config.api',
                             'ngRoute',
                             'pascalprecht.translate',
+                            'matemonkey.navbar',
                             'matemonkey.map',
                             'matemonkey.dealer',
-                            'matemonkey.filter'
+                            'matemonkey.filter',
+                            'matemonkey.about',
+                            'matemonkey.legal'
                          ])
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   $routeProvider.otherwise({redirectTo: '/map'});
@@ -54,6 +57,10 @@ var app = angular.module('matemonkey',
         switch(url) {
           case "dealers":
             return apiConfig.base_url + '/api/v1/dealers';
+          case "dealersSlug":
+            return apiConfig.base_url + '/api/v1/dealers/slug/' + arg;
+          case "updateDealer":
+            return apiConfig.base_url + '/api/v1/dealers/' + arg;
           case "stock":
             return apiConfig.base_url + '/api/v1/dealers/' + arg + "/stock";
           case "products":
