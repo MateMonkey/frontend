@@ -79,7 +79,10 @@ var app = angular.module('matemonkey',
 })
 .filter('cent2euro', function() {
   return function(input) {
-    return (input/100) + " €"
+    if (input == '?')
+      return input;
+    else
+      return (input/100);
   }
 })
 .filter('date2', function () {
@@ -87,3 +90,19 @@ var app = angular.module('matemonkey',
     return Date.parse(input);
   }
 })
+.directive('ensurefloat', function() {
+  return {
+    require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+      ctrl.$validators.isfloat = function(modelValue, viewValue) {
+        if (ctrl.$isEmpty(modelValue)) {
+          return true;
+        }
+        if (isNaN(viewValue)) {
+          return false;
+        }
+        return true;
+      }
+    }
+  }
+});

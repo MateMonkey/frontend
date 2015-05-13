@@ -1,20 +1,40 @@
 <div class="btn-group" role="group">
-<label class="btn btn-default" ng-model="filterModel.all" tooltip-placement="bottom" tooltip="Everything" btn-checkbox>
+<label class="btn btn-default" ng-model="typeFilterModel.all" tooltip-placement="bottom" tooltip="Everything" btn-checkbox>
   <span class="glyphicon glyphicon-star"></span>
 </label>
-<label class="btn btn-default" ng-model="filterModel.retail" tooltip-placement="bottom" tooltip="Retail" btn-checkbox>
+<label class="btn btn-default" ng-model="typeFilterModel.retail" tooltip-placement="bottom" tooltip="Retail" btn-checkbox>
   <span class="glyphicon glyphicon-shopping-cart"></span>
 </label>
-<label class="btn btn-default" ng-model="filterModel.restaurant" tooltip-placement="bottom" tooltip="Restaurants" btn-checkbox>
+<label class="btn btn-default" ng-model="typeFilterModel.restaurant" tooltip-placement="bottom" tooltip="Restaurants" btn-checkbox>
   <span class="glyphicon glyphicon-cutlery"></span>
 </label>
-<label class="btn btn-default" ng-model="filterModel.bar" tooltip-placement="bottom" tooltip="Bars" btn-checkbox>
+<label class="btn btn-default" ng-model="typeFilterModel.bar" tooltip-placement="bottom" tooltip="Bars" btn-checkbox>
   <span class="glyphicon glyphicon-glass"></span>
 </label>
-<label class="btn btn-default" ng-model="filterModel.club" tooltip-placement="bottom" tooltip="Clubs" btn-checkbox>
+<label class="btn btn-default" ng-model="typeFilterModel.club" tooltip-placement="bottom" tooltip="Clubs" btn-checkbox>
   <span class="glyphicon glyphicon-cd"></span>
 </label>
-<label class="btn btn-default" ng-model="filterModel.hackerspace" tooltip-placement="bottom" tooltip="Hackerspaces" btn-checkbox>
+<label class="btn btn-default" ng-model="typeFilterModel.community" tooltip-placement="bottom" tooltip="Community" btn-checkbox>
+  <span class="glyphicon glyphicon-user"></span>
+</label>
+<label class="btn btn-default" ng-model="typeFilterModel.hackerspace" tooltip-placement="bottom" tooltip="Hackerspaces" btn-checkbox>
   <span class="glyphicon icon-glider"></span>
 </label>
+<label class="btn btn-default" ng-model="typeFilterModel.other" tooltip-placement="bottom" tooltip="Other" btn-checkbox>
+  <span class="glyphicon glyphicon-info-sign"></span>
+</label>
 </div>
+
+<accordion>
+<accordion-group is-open="productFilterOpen">
+  <accordion-heading>
+    Filter Products<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
+  </accordion-heading>
+    <div class="container-fluid">
+      <div class="pull-left" ng-repeat="product in products">
+        <button type="button" class="btn btn-default" ng-model="productFilterModel[product.id]" btn-checkbox>
+          {{product.name}}
+        </button>
+      </div>
+    </div>
+</accordion>

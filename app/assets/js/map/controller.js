@@ -19,6 +19,9 @@ angular.module('matemonkey.map',
 }])
 
 .controller('MapController', function($scope, $http, $routeParams, DealerService, leafletBoundsHelpers, urlfor) {
+
+  $scope.ready = false;
+
   $scope.dealerToMarker = function(dealers) {
     return dealers.map(function(dealer) {
       return {
@@ -30,7 +33,16 @@ angular.module('matemonkey.map',
       };
     });
   };
-  $scope.ready = false;
+
+  $scope.focusOnDealer = function(dealer) {
+    angular.extend($scope.center,
+                    {
+                      zoom: 18,
+                      lat: dealer.address.lat,
+                      lng: dealer.address.lon,
+                    });
+  }
+
   $scope.loadDealers = function() {
     var requestBounds = angular.copy($scope.bounds);
     if (requestBounds.southWest.lat < -90.00) {
@@ -64,15 +76,16 @@ angular.module('matemonkey.map',
                        requestBounds.southWest.lng + "," +
                        requestBounds.northEast.lat + "," +
                        requestBounds.northEast.lng,
-                type: $scope.types}
+                type: $scope.types,
+                product: $scope.products}
       }).success(function(data) {
         $scope.markers = $scope.dealerToMarker(data['dealers']);
       });
   };
-
   $scope.defaultCenter = {
     lat: 48.13722,
     lng: 11.575556,
+    autoDiscover: false,
     zoom: 10
   };
   $scope.center = $scope.defaultCenter;
@@ -83,12 +96,7 @@ angular.module('matemonkey.map',
       method: "GET"
     }).success(function(dealer) {
       DealerService.select(dealer);
-      $scope.center = {
-        zoom: 18,
-        lat: dealer.address.lat,
-        lng: dealer.address.lon,
-        autoDiscover: false
-      };
+      $scope.focusOnDealer(dealer);
       $scope.ready = true;
     }).error(function() {
       $scope.center = $scope.defaultCenter;
@@ -96,6 +104,7 @@ angular.module('matemonkey.map',
       $scope.ready = true;
     });
   } else {
+    $scope.center.autoDiscover = true;
     $scope.ready = true;
   }
   angular.extend($scope, {
@@ -119,6 +128,11 @@ angular.module('matemonkey.map',
         type: 'awesomeMarker',
         icon: 'cd',
         markerColor: 'purple'
+      },
+      community: {
+        type: 'awesomeMarker',
+        icon: 'user',
+        markerColor: 'cadetblue'
       },
       hackerspace: {
         type: 'awesomeMarker',
@@ -166,11 +180,27 @@ angular.module('matemonkey.map',
   });
 
   $scope.$on('FilterChanged',function(event, f) {
-    if (f.all == true) {
+    var pCount = 0;
+    $scope.products = ""
+    angular.forEach(f.product, function(value, key) {
+      if (value == true) {
+        pCount += 1;
+        if ($scope.products.length == 0) {
+          $scope.products = key;
+        } else {
+          $scope.products += "," + key;
+        }
+      }
+    });
+    if (pCount == 0) {
+      $scope.products = null;
+    }
+
+    if (f.type.all == true) {
       $scope.types = null
     } else {
       $scope.types = ""
-      angular.forEach(f, function(value, key) {
+      angular.forEach(f.type, function(value, key) {
         if (value == true) {
           if ($scope.types.length == 0) {
             $scope.types = key;
@@ -185,9 +215,12 @@ angular.module('matemonkey.map',
       $scope.loadDealers();
     }
   });
+
   $scope.$on('DealerCreated', function(event, d) {
     angular.extend($scope.markers, $scope.dealerToMarker([d]));
+    $scope.focusOnDealer(d);
   });
+
   $scope.$on('DealerUpdated', function(event, d) {
     /* Doesn't work at the moment
     for (var i = 0; i < $scope.markers.length; i++) {

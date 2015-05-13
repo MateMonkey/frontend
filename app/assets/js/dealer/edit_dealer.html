@@ -1,17 +1,19 @@
 <div class="modal-header"><h3>{{title}}</h3></div>
 <div class="modal-body">
-<form class="form-horizontal">
-  <div class="form-group">
-    <label for="dealerType" class="col-sm-2 control-label">Name</label>
+<form class="form-horizontal" name="form">
+  <div class="form-group" ng-class="{'has-error': form.dealerName.$invalid }" >
+    <label for="dealerName" class="col-sm-2 control-label">Name</label>
     <div class="col-sm-6">
-      <input class="form-control" id="dealerType"  type="text" ng-model="dealer.name" />
+      <input class="form-control" id="dealerName" name="dealerName" type="text" ng-model="dealer.name" required/>
+      <span ng-show="form.dealerName.$invalid">Please enter a name.</span>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group" ng-class="{'has-error': form.dealerType.$invalid }" >
     <label for="dealerType" class="col-sm-2 control-label">Type</label>
     <div class="col-sm-6">
-      <select class="form-control" id="dealerType" ng-model="dealer.type" ng-options="type.value as type.displayText for type in typeOptions">
+      <select class="form-control" id="dealerType" name="dealerType" ng-model="dealer.type" ng-options="type.value as type.displayText for type in typeOptions" required>
       </select>
+      <span ng-show="form.dealerType.$invalid">Please select a type.</span>
     </div>
   </div>
   <div class="form-group">
@@ -21,34 +23,39 @@
     </div>
   </div>
   <h4>Address</h4>
-  <div class="form-group">
+  <div class="form-group" ng-class="{'has-error': form.addressStreet.$invalid }" >
     <label class="col-sm-2 control-label">Street</label>
     <div class="col-sm-6">
-      <input class="form-control" id="addressStreet" type="text" ng-model="dealer.address.street" />
+      <input class="form-control" id="addressStreet" name="addressStreet" type="text" ng-model="dealer.address.street" required/>
+      <span ng-show="form.addressStreet.$invalid">Please enter a street.</span>
     </div>
   </div>
-  <div class="form-group">
-    <label for="addressStreet" class="col-sm-2 control-label">Number</label>
+  <div class="form-group" ng-class="{'has-error': form.addressNumber.$invalid }" >
+    <label for="addressNumber" class="col-sm-2 control-label">Number</label>
     <div class="col-sm-6">
-      <input class="form-control" id="addressNumber" type="text" ng-model="dealer.address.number" />
+      <input class="form-control" id="addressNumber" name="addressNumber" type="text" ng-model="dealer.address.number" required/>
+      <span ng-show="form.addressNumber.$invalid">Please enter a housenumber.</span>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group" ng-class="{'has-error': form.addressPostal.$invalid }" >
     <label for="addressPostal" class="col-sm-2 control-label">ZIP</label>
     <div class="col-sm-6">
-      <input class="form-control" id="addressPostal" type="text" ng-model="dealer.address.postal" />
+      <input class="form-control" id="addressPostal" name="addressPostal" type="text" ng-model="dealer.address.postal" required/>
+      <span ng-show="form.addressPostal.$invalid">Please enter a ZIP code.</span>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group" ng-class="{'has-error': form.addressCity.$invalid }" >
     <label for="addressCity" class="col-sm-2 control-label">City</label>
     <div class="col-sm-6">
-      <input class="form-control" id="addressCity" type="text" ng-model="dealer.address.city" />
+      <input class="form-control" id="addressCity" name="addressCity" type="text" ng-model="dealer.address.city" required/>
+      <span ng-show="form.addressCity.$invalid">Please enter a city.</span>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group" ng-class="{'has-error': form.addressCountry.$invalid }" >
     <label for="addressCountry" class="col-sm-2 control-label">Country</label>
     <div class="col-sm-6">
-      <input class="form-control" id="addressCountry" type="text" ng-model="dealer.address.country" />
+      <input class="form-control" id="addressCountry" name="addressCountry" type="text" ng-model="dealer.address.country" required/>
+      <span ng-show="form.addressCountry.$invalid">Please enter a country.</span>
     </div>
   </div>
   <div class="form-group">
@@ -57,16 +64,17 @@
       <input class="form-control" id="addressPhone" type="text" ng-model="dealer.address.phone" />
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group" ng-class="{'has-error': form.addressEmail.$invalid }" >
     <label for="addressEmail" class="col-sm-2 control-label">Email</label>
     <div class="col-sm-6">
-      <input class="form-control" id="addressEmail" type="text" ng-model="dealer.address.email" />
+      <input class="form-control" id="addressEmail" name="addressEmail" type="email" ng-model="dealer.address.email" />
+      <span ng-show="form.addressEmail.$invalid ">Invalid Email Address.</span>
     </div>
   </div>
   <div class="form-group">
     <label for="addressWeb" class="col-sm-2 control-label">Web</label>
     <div class="col-sm-6">
-      <input class="form-control" id="addressWeb" type="text" ng-model="dealer.address.web" />
+      <input class="form-control" id="addressWeb" type="url" ng-model="dealer.address.web" />
     </div>
   </div>
 </form>
@@ -75,7 +83,7 @@
     <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
   </div>
   <div class="col-sm-1">
-    <button type="button" class="btn btn-primary" ng-click="save()">Save</button>
+    <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="save()">Save</button>
   </div>
 </div>
 

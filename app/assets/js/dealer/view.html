@@ -36,10 +36,18 @@
   <div>
     <table class="table table-striped">
       <tr ng-repeat="entry in stock">
-        <td ng-if="entry.status != 'discontinued' || showDiscontinued == true"><b>{{entry.product.name}}</b></td>
-        <td ng-if="entry.status != 'discontinued' || showDiscontinued == true"><small>{{entry.price | cent2euro}} / {{entry.quantity | capfirst}}</small></td>
-        <td ng-if="entry.status != 'discontinued' || showDiscontinued == true"><span class="label label-{{entry.status}}">{{entry.status | capfirst}}</span></td>
-        <td ng-if="entry.status != 'discontinued' || showDiscontinued == true"><small>{{entry.created_at | date2 | relativeDate}}</small></td>
+        <td ng-if="entry.status != 'discontinued' || showDiscontinued == true">
+          <b>{{entry.product.name}}</b>
+        </td>
+        <td ng-if="entry.status != 'discontinued' || showDiscontinued == true">
+          <small>{{entry.price | cent2euro}} / {{entry.quantity | capfirst}}</small>
+        </td>
+        <td ng-if="entry.status != 'discontinued' || showDiscontinued == true">
+          <span class="label label-{{entry.status}}">{{entry.status | capfirst}}</span>
+        </td>
+        <td ng-if="entry.status != 'discontinued' || showDiscontinued == true">
+          <small>{{entry.created_at | date2 | relativeDate}}</small>
+        </td>
       </tr>
     </table>
   </div>

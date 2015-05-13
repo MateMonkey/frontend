@@ -6,6 +6,7 @@
  */
 
 html, body, #container {
+  overflow: hidden;
   width: 100%;
   height: 100%;
 }
@@ -27,9 +28,8 @@ body {
   -webkit-transition: all 0.4s ease-out;
   -moz-transition: all 0.4s ease-out;
   transition: all 0.4s ease-out;
-}
-
-#infobar {
+  overflow-y: scroll;
+  overflow-x: hidden;
   padding: 10px;
 }
 

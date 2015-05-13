@@ -1,11 +1,12 @@
 <div class="modal-header"><h3>Update Stock for {{dealer.name}}</h3></div>
 <div class="modal-body">
-<form class="form-horizontal">
-  <div class="form-group">
+<form class="form-horizontal" name="form">
+  <div class="form-group" ng-class="{'has-error': form.product.$invalid }" >
     <label class="col-sm-2 control-label">Product</label>
     <div class="col-sm-6">
-      <select class="form-control" ng-model="stock.product" ng-options="product.id as product.name for product in products">
+      <select class="form-control" name="product" ng-model="stock.product" ng-options="product.id as product.name for product in products" required>
       </select>
+      <span ng-show="form.product.$invalid">Please select a product.</span>
     </div>
   </div>
   <div class="form-group">
@@ -15,10 +16,11 @@
       </select>
     </div>
   </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label">Price (in €)</label>
-    <div class="col-sm-4">
-      <input type="text" class="form-control" ng-model="stock.price" placeholder="13.37">
+  <div class="form-group" ng-class="{'has-error': form.price.$invalid }" >
+    <label class="col-sm-2 control-label">Price</label>
+    <div class="col-sm-2">
+      <input type="text" name="price" class="form-control" ng-model="stock.price" placeholder="13.37" ensurefloat>
+      <span ng-show="form.price.$error.isfloat">Please enter the price in the format 0.00.</span>
     </div>
   </div>
   <div class="form-group">
@@ -27,17 +29,18 @@
         <select class="form-control" ng-model="stock.quantity" ng-options="quantity.value as quantity.displayText for quantity in quantityOptions">
         </select>
       </div>
-    <label class="col-sm-2 control-label">
+    <label class="col-sm-2 control-label" tooltip="Is this a special offer?">
       <input type="checkbox" ng-model="stock.special"> Special?
     </label>
   </div>
 </form>
 </div>
 <div class="modal-footer">
+  <small>Hint: If you enter a new product and don't know the status, price or quantity just enter the product and hit <b>Save</b></small>
   <div class="col-sm-1">
     <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
   </div>
   <div class="col-sm-1">
-    <button type="button" class="btn btn-primary" ng-click="save()">Save</button>
+    <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="save()">Save</button>
   </div>
 </div>

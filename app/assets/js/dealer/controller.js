@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap", "dialogs.main"])
-.controller('DealerController', function($scope, $http, $location, DealerService, dialogs, urlfor) {
+.controller('DealerController', function($scope, $http, $route, $location, DealerService, dialogs, urlfor) {
   $scope.showDiscontinued = false;
   $scope.reloadStock = function() {
     $http({
@@ -12,14 +12,23 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
       }
     }).success(function(data) {
       $scope.stock = data['entries'];
+    }).error(function(data) {
+      $scope.stock = {};
     });
   };
 
-  $scope.$on('DealerSelected', function(event, d) {
+  $scope.setDealer = function(d) {
     $scope.dealer = d;
+    /* Hack to prevent angular from reloading the page */
+    $route.current.pathParams['dealer_slug'] = d.slug;
     $location.path('/map/dealer/'+d.slug);
     $scope.reloadStock();
+  }
+
+  $scope.$on('DealerSelected', function(event, d) {
+    $scope.setDealer(d);
   });
+
 
   $scope.updateStock = function(dealer, stock) {
     var data = null
@@ -53,7 +62,7 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
       method: "PUT",
       data: dealer
     }).success(function(data) {
-      $scope.dealer = data;
+      $scope.setDealer(data);
       DealerService.update(data);
     });
   }
@@ -64,7 +73,7 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
       method: "POST",
       data: dealer
     }).success(function(data) {
-      $scope.dealer = dealer;
+      $scope.setDealer(data);
       DealerService.create(data);
     });
   }
@@ -119,10 +128,15 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
       value: "hackerspace"
     },
     {
+      displayText: "Community",
+      value: "community"
+    },
+    {
       displayText: "Other",
       value: "other"
     }
   ];
+
   if (data == null) {
     $scope.dealer = {};
     $scope.title = "Create new dealer"
@@ -138,7 +152,7 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
   };
 
 })
-.controller('UpdateStockController',function($scope, $http, $modalInstance, data, urlfor){
+.controller('UpdateStockController',function($scope, $http, $modalInstance, data, urlfor) {
   $scope.statusOptions = [
     {
       displayText: "Discontinued",
@@ -173,8 +187,13 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
     {
       displayText: "kg",
       value: "kg"
+    },
+    {
+      displayText: "Unknown",
+      value: "unknown"
     }
   ];
+
   $http.get(urlfor.get("products")).success(function(data) {
     $scope.products = data['products'];
   })
