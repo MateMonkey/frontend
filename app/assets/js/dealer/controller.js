@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap", "dialogs.main"])
+angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap", "dialogs.main", "isoCurrency"])
 .controller('DealerController', function($scope, $http, $route, $location, DealerService, dialogs, urlfor) {
   $scope.showDiscontinued = false;
   $scope.reloadStock = function() {

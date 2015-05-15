@@ -77,7 +77,7 @@ var app = angular.module('matemonkey',
            input.slice(1).toLowerCase();
   }
 })
-.filter('cent2euro', function() {
+.filter('div100', function() {
   return function(input) {
     if (input == '?')
       return input;

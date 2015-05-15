@@ -40,7 +40,8 @@
           <b>{{entry.product.name}}</b>
         </td>
         <td ng-if="entry.status != 'discontinued' || showDiscontinued == true">
-          <small>{{entry.price | cent2euro}} / {{entry.quantity | capfirst}}</small>
+          <small ng-if="entry.price == '?'">{{entry.price}} / {{entry.quantity | capfirst}}</small>
+          <small ng-if="entry.price != '?'">{{entry.price | div100 | isoCurrency:dealer.currency}} / {{entry.quantity | capfirst}}</small>
         </td>
         <td ng-if="entry.status != 'discontinued' || showDiscontinued == true">
           <span class="label label-{{entry.status}}">{{entry.status | capfirst}}</span>

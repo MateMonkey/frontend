@@ -17,7 +17,7 @@
     </div>
   </div>
   <div class="form-group" ng-class="{'has-error': form.price.$invalid }" >
-    <label class="col-sm-2 control-label">Price</label>
+    <label class="col-sm-2 control-label">Price ({{dealer.currency}})</label>
     <div class="col-sm-2">
       <input type="text" name="price" class="form-control" ng-model="stock.price" placeholder="13.37" ensurefloat>
       <span ng-show="form.price.$error.isfloat">Please enter the price in the format 0.00.</span>
@@ -37,10 +37,12 @@
 </div>
 <div class="modal-footer">
   <small>Hint: If you enter a new product and don't know the status, price or quantity just enter the product and hit <b>Save</b></small>
+  <div class="row">
   <div class="col-sm-1">
     <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
   </div>
   <div class="col-sm-1">
     <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="save()">Save</button>
+  </div>
   </div>
 </div>
