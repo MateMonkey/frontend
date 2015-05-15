@@ -6,13 +6,13 @@ angular.module('matemonkey.filter', [])
   $scope.productFilterModel = {};
   $scope.typeFilterModel = {
     all: true,
-    retail: true,
-    restaurant: true,
-    bar: true,
-    club: true,
-    community: true,
-    hackerspace: true,
-    other: true
+    retail: false,
+    restaurant: false,
+    bar: false,
+    club: false,
+    community: false,
+    hackerspace: false,
+    other: false
   };
 
   $http.get(urlfor.get("products")).success(function(data) {
@@ -21,22 +21,36 @@ angular.module('matemonkey.filter', [])
 
   $scope.$watchCollection('typeFilterModel', function(newVal, oldVal) {
     if (oldVal.all == false && newVal.all == true) {
-      $scope.typeFilterModel.retail = true;
-      $scope.typeFilterModel.restaurant = true;
-      $scope.typeFilterModel.bar = true;
-      $scope.typeFilterModel.club = true;
-      $scope.typeFilterModel.community = true;
-      $scope.typeFilterModel.other = true;
-      $scope.typeFilterModel.hackerspace = true;
+      $scope.typeFilterModel.retail = false;
+      $scope.typeFilterModel.restaurant = false;
+      $scope.typeFilterModel.bar = false;
+      $scope.typeFilterModel.club = false;
+      $scope.typeFilterModel.community = false;
+      $scope.typeFilterModel.other = false;
+      $scope.typeFilterModel.hackerspace = false;
     }
-    if (newVal.retail == false &&
+    if ((newVal.retail == false &&
         newVal.restaurant == false &&
         newVal.bar == false &&
         newVal.club == false &&
         newVal.community == false &&
         newVal.other == false &&
-        newVal.hackerspace == false) {
+        newVal.hackerspace == false) ||
+       (newVal.retail == true &&
+        newVal.restaurant == true &&
+        newVal.bar == true &&
+        newVal.club == true &&
+        newVal.community == true &&
+        newVal.other == true &&
+        newVal.hackerspace == true)) {
       $scope.typeFilterModel.all = true;
+      $scope.typeFilterModel.retail = false;
+      $scope.typeFilterModel.restaurant = false;
+      $scope.typeFilterModel.bar = false;
+      $scope.typeFilterModel.club = false;
+      $scope.typeFilterModel.community = false;
+      $scope.typeFilterModel.other = false;
+      $scope.typeFilterModel.hackerspace = false;
     }
     if (((newVal.retail |
         newVal.restaurant |
