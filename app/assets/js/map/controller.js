@@ -151,7 +151,8 @@ angular.module('matemonkey.map',
           name: 'OSM',
           type: 'xyz',
           url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
-          layerOptions: {
+          layerParams: {
+            noWrap: true,
             subdomains: '1234',
             attribution: "© <a href=\"http://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a> contributors | Tiles Courtesy of <a href=\"http://www.mapquest.com/\" target=\"_blank\">MapQuest</a> <img src=\"http://developer.mapquest.com/content/osm/mq_logo.png\">"
           }
