@@ -21,6 +21,11 @@ angular.module('matemonkey.map',
 .controller('MapController', function($scope, $http, $routeParams, DealerService, leafletBoundsHelpers, urlfor) {
 
   $scope.ready = false;
+  $scope.showSidebar = true;
+
+  $scope.$on('DealerSelected', function(event, d) {
+    $scope.showSidebar = true;
+  });
 
   $scope.dealerToMarker = function(dealers) {
     return dealers.map(function(dealer) {
