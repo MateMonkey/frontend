@@ -14,7 +14,8 @@
     "leaflet.markercluster": "v0.4.0-hotfix.1",
     "Leaflet.awesome-markers": "*",
     "leaflet": "~0.7.3",
-    "bootstrap": "*"
+    "bootstrap": "*",
+    "angular-media-queries": "~0.4.0"
   },
   "authors": [
     "Maximilian Güntner <maximilian.guentner@gmail.com>"

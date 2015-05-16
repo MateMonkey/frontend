@@ -3,6 +3,7 @@
 angular.module('matemonkey.map',
                [
                  'ngRoute',
+                 'matchMedia',
                  'leaflet-directive'
                ])
 .config(['$routeProvider', function($routeProvider) {
@@ -18,12 +19,37 @@ angular.module('matemonkey.map',
   });
 }])
 
-.controller('MapController', function($scope, $http, $routeParams, DealerService, leafletBoundsHelpers, urlfor) {
+.controller('MapController', function($scope, $http, $routeParams, $timeout, DealerService, MapService, screenSize, leafletData, leafletBoundsHelpers, urlfor) {
 
   $scope.ready = false;
-  $scope.showSidebar = true;
+  $scope.showSidebar = screenSize.is('md, lg');
 
   $scope.$on('DealerSelected', function(event, d) {
+    $scope.showSidebar = true;
+  });
+
+  $scope.$on('MapFocus', function(event, location) {
+    angular.extend($scope.center,
+    {
+      zoom: 12,
+      lat: location.lat,
+      lng: location.lon,
+    });
+  });
+
+  $scope.$watch('showSidebar', function(val) {
+    leafletData.getMap().then(function(map) {
+      $timeout(function() {
+        map.invalidateSize();
+      }, 400);
+    });
+  });
+
+  screenSize.when('xs,sm', function() {
+    $scope.showSidebar = false;
+  });
+
+  screenSize.when('md,lg', function() {
     $scope.showSidebar = true;
   });
 
@@ -159,7 +185,8 @@ angular.module('matemonkey.map',
           layerParams: {
             noWrap: true,
             subdomains: '1234',
-            attribution: "© <a href=\"http://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a> contributors | Tiles Courtesy of <a href=\"http://www.mapquest.com/\" target=\"_blank\">MapQuest</a> <img src=\"http://developer.mapquest.com/content/osm/mq_logo.png\">"
+            attribution: "© <a href=\"http://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a> contributors | Tiles Courtesy of <a href=\"http://www.mapquest.com/\" target=\"_blank\">MapQuest</a> <img src=\"http://developer.mapquest.com/content/osm/mq_logo.png\">",
+            prefix: false
           }
         }
       },
@@ -246,5 +273,12 @@ angular.module('matemonkey.map',
       $scope.loadDealers();
     }
   });
+})
+.service('MapService', function($rootScope) {
+  return {
+    focus: function(location) {
+      $rootScope.$broadcast('MapFocus', location);
+    }
+  }
 });
 

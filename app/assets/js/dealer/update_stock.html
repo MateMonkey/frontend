@@ -36,13 +36,9 @@
 </form>
 </div>
 <div class="modal-footer">
+  <p>
   <small>Hint: If you enter a new product and don't know the status, price or quantity just enter the product and hit <b>Save</b></small>
-  <div class="row">
-  <div class="col-sm-1">
-    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-  </div>
-  <div class="col-sm-1">
-    <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="save()">Save</button>
-  </div>
-  </div>
+  </p>
+  <button type="button" class="btn btn-primary pull-right" ng-disabled="form.$invalid" ng-click="save()">Save</button>
+  <button type="button" class="btn btn-default pull-right" ng-click="cancel()">Cancel</button>
 </div>

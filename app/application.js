@@ -65,6 +65,8 @@ var app = angular.module('matemonkey',
             return apiConfig.base_url + '/api/v1/dealers/' + arg + "/stock";
           case "products":
             return apiConfig.base_url + '/api/v1/products';
+          case "search":
+            return apiConfig.base_url + '/api/v1/search';
         }
         return "";
     }

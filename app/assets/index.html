@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/vendor.css">
   </head>
   <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavBarController">
+    <nav class="navbar navbar-inverse navbar-fixed-top ng-scope" ng-controller="NavBarController">
       <div class="navbar-header">
         <button class="navbar-toggle" type="button" ng-click="isCollapsed = !isCollapsed">
           <span class="sr-only">Toggle Navigation</span>
@@ -17,10 +17,27 @@
           <span class="icon-bar"></span>
         </button>
         <a class="navbar-brand" href="/#!/">MateMonkey - αlpha</a>
+        <div ng-if="isMap" class="navbar-left">
+          <button class="btn btn-success navbar-btn navbar-left" type="button" tooltip-placement="bottom" tooltip="Create Dealer" ng-click="addDealer()">
+            <span class="glyphicon glyphicon-plus-sign"></span>
+          </button>
+        </div>
       </div>
       <div id="mainNavBar" class="collapse nav-collapse navbar-responsive-collapse" collapse="isCollapsed">
+        <div ng-if="isMap" class="navbar-left">
+          <form class="navbar-form navbar-left" role="search">
+            <div class="input-group">
+              <input type="text" class="form-control" ng-model="$parent.query" placeholder="München"/>
+              <div class="input-group-btn">
+                <button type="submit" class="btn btn-default" ng-click="searchLocation()">
+                  <span class="glyphicon glyphicon-search"></span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
         <ul class="nav navbar-nav">
-          <li><a href="/#!/map">Map</a></li>
+          <li ng-if="!isMap"><a href="/#!/map">Map</a></li>
           <li><a href="/#!/about">About</a></li>
           <li><a href="/#!/legal">Legal</a></li>
         </ul>

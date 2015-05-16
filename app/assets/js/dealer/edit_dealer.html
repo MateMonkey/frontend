@@ -79,12 +79,8 @@
   </div>
 </form>
 <div class="modal-footer">
-  <div class="col-sm-1">
-    <button type="button" class="btn btn-default" ng-click="cancel()">Cancel</button>
-  </div>
-  <div class="col-sm-1">
-    <button type="button" class="btn btn-primary" ng-disabled="form.$invalid" ng-click="save()">Save</button>
-  </div>
+  <button type="button" class="btn btn-primary pull-right" ng-disabled="form.$invalid" ng-click="save()">Save</button>
+  <button type="button" class="btn btn-default pull-right" ng-click="cancel()">Cancel</button>
 </div>
 
 

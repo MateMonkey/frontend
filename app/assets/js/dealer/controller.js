@@ -104,6 +104,10 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
       }
     });
   };
+
+  $scope.$on('DealerAddRequest', function (event) {
+    $scope.createNewDealer();
+  });
 })
 .controller('EditDealerController', function($scope, $http, $modalInstance, data, urlfor){
   $scope.typeOptions = [
@@ -221,6 +225,9 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
     },
     create: function(d) {
       $rootScope.$broadcast('DealerCreated', d);
+    },
+    add: function() {
+      $rootScope.$broadcast('DealerAddRequest');
     }
   }
 });
