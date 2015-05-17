@@ -16,6 +16,7 @@
     "clean-css-brunch": ">= 1.0 < 1.8",
     "constangular-brunch": "^0.1.4",
     "css-brunch": ">= 1.0 < 1.8",
+    "less-brunch": "latest",
     "javascript-brunch": ">= 1.0 < 1.8",
     "uglify-js-brunch": ">= 1.0 < 1.8"
   }

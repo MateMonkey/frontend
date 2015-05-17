@@ -22,7 +22,11 @@ angular.module('matemonkey.map',
 .controller('MapController', function($scope, $http, $routeParams, $timeout, DealerService, MapService, screenSize, leafletData, leafletBoundsHelpers, urlfor) {
 
   $scope.ready = false;
-  $scope.showSidebar = screenSize.is('md, lg');
+  $scope.showSidebar = !screenSize.is('xs');
+  var minZoom = 12;
+  if (!screenSize.is('xs')) {
+    minZoom = 5;
+  }
 
   $scope.$on('DealerSelected', function(event, d) {
     $scope.showSidebar = true;
@@ -35,6 +39,10 @@ angular.module('matemonkey.map',
       lat: location.lat,
       lng: location.lon,
     });
+    if (!screenSize.is('md, lg')) {
+      $scope.showSidebar = false;
+    }
+
   });
 
   $scope.$watch('showSidebar', function(val) {
@@ -43,14 +51,6 @@ angular.module('matemonkey.map',
         map.invalidateSize();
       }, 400);
     });
-  });
-
-  screenSize.when('xs,sm', function() {
-    $scope.showSidebar = false;
-  });
-
-  screenSize.when('md,lg', function() {
-    $scope.showSidebar = true;
   });
 
   $scope.dealerToMarker = function(dealers) {
@@ -113,14 +113,8 @@ angular.module('matemonkey.map',
         $scope.markers = $scope.dealerToMarker(data['dealers']);
       });
   };
-  $scope.defaultCenter = {
-    lat: 48.13722,
-    lng: 11.575556,
-    autoDiscover: false,
-    zoom: 10
-  };
-  $scope.center = $scope.defaultCenter;
 
+  $scope.center = {}
   if ($routeParams.hasOwnProperty('dealer_slug')) {
     $http({
       url: urlfor.get("dealersSlug", $routeParams.dealer_slug),
@@ -130,14 +124,24 @@ angular.module('matemonkey.map',
       $scope.focusOnDealer(dealer);
       $scope.ready = true;
     }).error(function() {
-      $scope.center = $scope.defaultCenter;
-      $scope.center.autoDiscover = true;
+      angular.extend($scope, {
+        center: {
+          zoom: 12,
+          autoDiscover: true
+        }
+      });
       $scope.ready = true;
     });
   } else {
-    $scope.center.autoDiscover = true;
+    angular.extend($scope, {
+      center: {
+        zoom: 12,
+        autoDiscover: true
+      }
+    });
     $scope.ready = true;
   }
+
   angular.extend($scope, {
     icons: {
       retail : {
@@ -204,6 +208,12 @@ angular.module('matemonkey.map',
         layers: {
           visible: false,
         }
+      },
+      minZoom: minZoom,
+      center: {
+        lat: 48.13722,
+        lng: 11.575556,
+        zoom: 12
       }
     }
   });

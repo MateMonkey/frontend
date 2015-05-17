@@ -29,5 +29,9 @@
     "bower_components",
     "test",
     "tests"
-  ]
+  ],
+  "resolutions": {
+    "angular-translate": "~2.7.0",
+    "angular-bootstrap": "~0.13.0"
+  }
 }

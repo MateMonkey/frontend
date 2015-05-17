@@ -1,10 +1,3 @@
-/*
- *= require_self
- *= require bootstrap
- *= require leaflet
- *= require leaflet.markercluster
- */
-
 html, body, #container {
   overflow: hidden;
   width: 100%;
@@ -37,12 +30,12 @@ body {
 #infobar {
   z-index: 10;
   width: 0px;
-  height: 100%;
+  height: 90%;
   left: 450px;
   margin-left: -450px;
   position: fixed;
   float: left;
-  overflow-y: scroll;
+  overflow-y: auto;
   overflow-x: hidden;
   -webkit-transition: all 0.2s ease-out;
   -moz-transition: all 0.2s ease-out;
@@ -60,7 +53,10 @@ body {
   float: left;
   width: 15px;
   height: 100%;
-  background-color: #aaaaaa;
+  color: #eee;
+  cursor: pointer;
+  text-align: center;
+  background-color: @brand-success;
 }
 
 .label-unknown {

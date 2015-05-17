@@ -4,8 +4,8 @@
   <div ng-controller="DealerController" ng-include="'js/dealer/view.html'"></div>
 </div>
 <div id="infobar-slider" ng-click="showSidebar = !showSidebar" ng-class="{'show-sidebar': showSidebar}">
-  <span style="top:50%" ng-if="!showSidebar" class="glyphicon glyphicon-menu-right" aria-hidden="true"></span>
-  <span style="top:50%" ng-if="showSidebar" class="glyphicon glyphicon-menu-left" aria-hidden="true"></span>
+  <span style="top:50%" ng-if="!showSidebar" class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
+  <span style="top:50%" ng-if="showSidebar" class="glyphicon glyphicon-triangle-left" aria-hidden="true"></span>
 </div>
 <leaflet defaults="defaults" bounds="bounds" markers="markers" layers="layers" center="center" id="map">
 </leaflet>
