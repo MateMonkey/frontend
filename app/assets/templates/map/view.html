@@ -1,7 +1,7 @@
 <div id="mapwrapper" ng-class="{'show-sidebar': showSidebar}">
 <div id="infobar" ng-class="{'show-sidebar': showSidebar}">
-  <div ng-controller="FilterController" ng-include="'js/filter/view.html'"></div>
-  <div ng-controller="DealerController" ng-include="'js/dealer/view.html'"></div>
+  <div ng-controller="FilterController" ng-include="'templates/filter/view.html'"></div>
+  <div ng-controller="DealerController" ng-include="'templates/dealer/view.html'"></div>
 </div>
 <div id="infobar-slider" ng-click="showSidebar = !showSidebar" ng-class="{'show-sidebar': showSidebar}">
   <span style="top:50%" ng-if="!showSidebar" class="glyphicon glyphicon-triangle-right" aria-hidden="true"></span>
