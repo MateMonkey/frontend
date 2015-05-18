@@ -6,7 +6,7 @@ angular.module('matemonkey.legal',
                ])
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/legal', {
-    templateUrl: 'js/legal/view.html',
+    templateUrl: 'templates/legal/view.html',
     controller: 'LegalController'
   });
 }])

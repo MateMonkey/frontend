@@ -79,7 +79,7 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
   }
 
   $scope.showUpdateStock = function() {
-    var dlg = dialogs.create('js/dealer/update_stock.html', 'UpdateStockController', $scope.dealer, 'lg');
+    var dlg = dialogs.create('templates/dealer/update_stock.html', 'UpdateStockController', $scope.dealer, 'lg');
     dlg.result.then(function(data){
       if (data.save == true) {
         $scope.updateStock(data.dealer, data.stock);
@@ -88,7 +88,7 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
   };
 
   $scope.showEditDealer = function() {
-    var dlg = dialogs.create('js/dealer/edit_dealer.html', 'EditDealerController', angular.copy($scope.dealer), 'lg');
+    var dlg = dialogs.create('templates/dealer/edit_dealer.html', 'EditDealerController', angular.copy($scope.dealer), 'lg');
     dlg.result.then(function(data) {
       if (data.save == true) {
         $scope.updateDealer(data.dealer);
@@ -97,7 +97,7 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
   };
 
   $scope.createNewDealer = function() {
-    var dlg = dialogs.create('js/dealer/edit_dealer.html', 'EditDealerController', null, 'lg');
+    var dlg = dialogs.create('templates/dealer/edit_dealer.html', 'EditDealerController', null, 'lg');
     dlg.result.then(function(data) {
       if (data.save == true) {
         $scope.createDealer(data.dealer);

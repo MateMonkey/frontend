@@ -7,13 +7,13 @@ angular.module('matemonkey.map',
                  'leaflet-directive'
                ])
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/map/', {
-    templateUrl: 'js/map/view.html',
+  $routeProvider.when('/map', {
+    templateUrl: 'templates/map/view.html',
     controller: 'MapController',
     reloadOnSearch: false
   });
   $routeProvider.when('/map/dealer/:dealer_slug', {
-    templateUrl: 'js/map/view.html',
+    templateUrl: 'templates/map/view.html',
     controller: 'MapController',
     reloadOnSearch: false
   });
@@ -23,6 +23,7 @@ angular.module('matemonkey.map',
 
   $scope.ready = false;
   $scope.showSidebar = !screenSize.is('xs');
+  $scope.center = {};
   var minZoom = 12;
   if (!screenSize.is('xs')) {
     minZoom = 5;
@@ -76,6 +77,9 @@ angular.module('matemonkey.map',
 
   $scope.loadDealers = function() {
     var requestBounds = angular.copy($scope.bounds);
+    if (requestBounds === undefined) {
+      return;
+    }
     if (requestBounds.southWest.lat < -90.00) {
       requestBounds.southWest.lat = -90.00;
     }
@@ -114,7 +118,6 @@ angular.module('matemonkey.map',
       });
   };
 
-  $scope.center = {}
   if ($routeParams.hasOwnProperty('dealer_slug')) {
     $http({
       url: urlfor.get("dealersSlug", $routeParams.dealer_slug),
