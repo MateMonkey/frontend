@@ -19,7 +19,9 @@ angular.module('matemonkey.map',
   });
 }])
 
-.controller('MapController', function($scope, $http, $routeParams, $timeout, DealerService, MapService, screenSize, leafletData, leafletBoundsHelpers, urlfor) {
+.controller('MapController', [
+  '$scope', '$http', '$routeParams', '$timeout', 'DealerService', 'MapService', 'screenSize', 'leafletData', 'leafletBoundsHelpers', 'urlfor',
+  function($scope, $http, $routeParams, $timeout, DealerService, MapService, screenSize, leafletData, leafletBoundsHelpers, urlfor) {
 
   $scope.ready = false;
   $scope.showSidebar = !screenSize.is('xs');
@@ -286,12 +288,12 @@ angular.module('matemonkey.map',
       $scope.loadDealers();
     }
   });
-})
-.service('MapService', function($rootScope) {
+}])
+.service('MapService', ['$rootScope', function($rootScope) {
   return {
     focus: function(location) {
       $rootScope.$broadcast('MapFocus', location);
     }
   }
-});
+}]);
 

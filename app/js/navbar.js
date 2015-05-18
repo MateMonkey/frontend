@@ -4,9 +4,8 @@ angular.module('matemonkey.navbar',
                [
                  'ui.bootstrap'
                ])
-.controller('NavBarController', ['$scope', '$http', '$rootScope', '$location', 'urlfor', 'MapService', 'DealerService', NavBarController]);
-
-function NavBarController($scope, $http, $rootScope, $location, urlfor, MapService, DealerService) {
+.controller('NavBarController', ['$scope', '$http', '$rootScope', '$location', 'urlfor', 'MapService', 'DealerService',
+            function ($scope, $http, $rootScope, $location, urlfor, MapService, DealerService) {
   $scope.isCollapsed = true;
   $scope.isMap = false;
   $scope.query = "";
@@ -35,4 +34,4 @@ function NavBarController($scope, $http, $rootScope, $location, urlfor, MapServi
     });
   }
 
-};
+}]);

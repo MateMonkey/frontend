@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap", "dialogs.main", "isoCurrency"])
-.controller('DealerController', function($scope, $http, $route, $location, DealerService, dialogs, urlfor) {
+.controller('DealerController', ['$scope', '$http', '$route', '$location', 'DealerService', 'dialogs', 'urlfor',
+            function($scope, $http, $route, $location, DealerService, dialogs, urlfor) {
   $scope.showDiscontinued = false;
   $scope.reloadStock = function() {
     $http({
@@ -108,8 +109,9 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
   $scope.$on('DealerAddRequest', function (event) {
     $scope.createNewDealer();
   });
-})
-.controller('EditDealerController', function($scope, $http, $modalInstance, data, urlfor){
+}])
+.controller('EditDealerController', ['$scope', '$http', '$modalInstance', 'data', 'urlfor',
+            function($scope, $http, $modalInstance, data, urlfor){
   $scope.typeOptions = [
     {
       displayText: "Retail",
@@ -155,8 +157,9 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
     $modalInstance.close({save: false, dealer: null});
   };
 
-})
-.controller('UpdateStockController',function($scope, $http, $modalInstance, data, urlfor) {
+}])
+.controller('UpdateStockController',['$scope', '$http', '$modalInstance', 'data', 'urlfor',
+            function($scope, $http, $modalInstance, data, urlfor) {
   $scope.statusOptions = [
     {
       displayText: "Discontinued",
@@ -210,8 +213,8 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
   $scope.cancel = function(){
     $modalInstance.close({save: false, dealer: null, stock: null});
   };
-})
-.service('DealerService', function($rootScope) {
+}])
+.service('DealerService', ['$rootScope', function($rootScope) {
   var dealer = null;
   return {
     select: function(d) {
@@ -230,5 +233,5 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
       $rootScope.$broadcast('DealerAddRequest');
     }
   }
-});
+}]);
 

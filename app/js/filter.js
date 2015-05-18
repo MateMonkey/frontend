@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('matemonkey.filter', [])
-.controller('FilterController', function($scope, $http, FilterService, urlfor) {
+.controller('FilterController', ['$scope', '$http', 'FilterService', 'urlfor', function($scope, $http, FilterService, urlfor) {
   $scope.productFilterOpen = false;
   $scope.productFilterModel = {};
   $scope.typeFilterModel = {
@@ -74,8 +74,8 @@ angular.module('matemonkey.filter', [])
     FilterService.set({type: $scope.typeFilterModel, product: $scope.productFilterModel});
   });
 
-})
-.service('FilterService', function($rootScope) {
+}])
+.service('FilterService', ['$rootScope', function($rootScope) {
   var filterOptions = null;
   return {
     set : function(x) {
@@ -86,5 +86,5 @@ angular.module('matemonkey.filter', [])
       return filterOptions;
     }
   }
-});
+}]);
 
