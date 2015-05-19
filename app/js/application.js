@@ -107,4 +107,36 @@ var app = angular.module('matemonkey',
       }
     }
   }
+})
+.run(function($rootScope) {
+  $rootScope.utils = {
+    compareBounds: function(a,b) {
+      if ((a.northEast.lat > b.northEast.lat) |
+          (a.northEast.lng > b.northEast.lng) |
+          (a.southWest.lat < b.southWest.lat) |
+          (a.southWest.lng < b.southWest.lng)) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+  ,
+  scaleBounds: function(bound, scale) {
+    var dlat = Math.abs(bound.northEast.lat-
+                        bound.southWest.lat);
+    var dlng = Math.abs(bound.northEast.lng-
+                        bound.southWest.lng);
+    return {
+      northEast: {
+        lat: Math.min(Math.max(bound.northEast.lat+dlat/2.0,  -90), 90),
+        lng: Math.min(Math.max(bound.northEast.lng+dlng/2.0, -180), 180)
+      },
+      southWest: {
+        lat: Math.min(Math.max(bound.southWest.lat-dlat/2.0, -90), 90),
+        lng: Math.min(Math.max(bound.southWest.lng-dlng/2.0,  -180), 180)
+      }
+    }
+  }
+  }
+
 });

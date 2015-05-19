@@ -24,6 +24,7 @@ angular.module('matemonkey.map',
   function($scope, $http, $routeParams, $timeout, DealerService, MapService, screenSize, leafletData, leafletBoundsHelpers, urlfor) {
 
   $scope.ready = false;
+  $scope.requestInProgress = false;
   $scope.showSidebar = !screenSize.is('xs');
   $scope.center = {};
   var minZoom = 12;
@@ -77,35 +78,31 @@ angular.module('matemonkey.map',
                     });
   }
 
-  $scope.loadDealers = function() {
+  $scope.loadDealers = function(force) {
     var requestBounds = angular.copy($scope.bounds);
     if (requestBounds === undefined) {
       return;
     }
-    if (requestBounds.southWest.lat < -90.00) {
-      requestBounds.southWest.lat = -90.00;
+    if ($scope.requestInProgress ==  true) {
+      return;
     }
-    if (requestBounds.southWest.lat > 90.00) {
-      requestBounds.southWest.lat = 90.00;
+
+    requestBounds.northEast.lat = Math.min(Math.max(requestBounds.northEast.lat,  -90), 90);
+    requestBounds.southWest.lat = Math.min(Math.max(requestBounds.southWest.lat,  -90), 90);
+    requestBounds.northEast.lng = Math.min(Math.max(requestBounds.northEast.lng, -180), 180)
+    requestBounds.southWest.lng = Math.min(Math.max(requestBounds.southWest.lng, -180), 180)
+
+    if ($scope.requestedBounds !== undefined && force == false) {
+      if ($scope.utils.compareBounds(requestBounds, $scope.requestedBounds) == false) {
+        return;
+      }
     }
-    if (requestBounds.southWest.lng < -180.00) {
-      requestBounds.southWest.lng = -180.00;
-    }
-    if (requestBounds.southWest.lng > 180.00) {
-      requestBounds.southWest.lng = 180.00;
-    }
-    if (requestBounds.northEast.lat < -90.00) {
-      requestBounds.northEast.lat = -90.00;
-    }
-    if (requestBounds.northEast.lat > 90.00) {
-      requestBounds.northEast.lat = 90.00;
-    }
-    if (requestBounds.northEast.lng < -180.00) {
-      requestBounds.northEast.lng = -180.00;
-    }
-    if (requestBounds.northEast.lng > 180.00) {
-      requestBounds.northEast.lng = 180.00;
-    }
+
+    requestBounds = $scope.utils.scaleBounds(requestBounds, 1+Math.ceil($scope.center.zoom/4));
+
+    $scope.markers = {};
+    $scope.requestInProgress = true;
+    $scope.requestedBounds = requestBounds;
     $http({
         url: urlfor.get("dealers"),
         method: "GET",
@@ -117,6 +114,9 @@ angular.module('matemonkey.map',
                 product: $scope.products}
       }).success(function(data) {
         $scope.markers = $scope.dealerToMarker(data['dealers']);
+        $scope.requestInProgress = false;
+      }).error(function(data) {
+        $scope.requestInProgress = false;
       });
   };
 
@@ -259,8 +259,7 @@ angular.module('matemonkey.map',
       });
     }
     if ($scope.ready == true) {
-      $scope.markers = {};
-      $scope.loadDealers();
+      $scope.loadDealers(true);
     }
   });
 
@@ -279,13 +278,11 @@ angular.module('matemonkey.map',
       }
     }
     */
-    $scope.markers = {};
-    $scope.loadDealers();
+    $scope.loadDealers(true);
   });
   $scope.$watch('bounds', function(newVal, oldVal) {
     if ($scope.ready == true) {
-      $scope.markers = {};
-      $scope.loadDealers();
+      $scope.loadDealers(false);
     }
   });
 }])
