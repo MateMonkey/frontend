@@ -27,7 +27,7 @@ angular.module('matemonkey.map',
   $scope.requestInProgress = false;
   $scope.showSidebar = !screenSize.is('xs');
   $scope.center = {};
-  var minZoom = 12;
+  var minZoom = 10;
   if (!screenSize.is('xs')) {
     minZoom = 5;
   }
