@@ -98,7 +98,7 @@ angular.module('matemonkey.map',
       }
     }
 
-    requestBounds = $scope.utils.scaleBounds(requestBounds, 1+Math.ceil($scope.center.zoom/4));
+    requestBounds = $scope.utils.scaleBounds(requestBounds, Math.ceil($scope.center.zoom/4));
 
     $scope.markers = {};
     $scope.requestInProgress = true;

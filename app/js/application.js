@@ -128,12 +128,12 @@ var app = angular.module('matemonkey',
                         bound.southWest.lng);
     return {
       northEast: {
-        lat: Math.min(Math.max(bound.northEast.lat+dlat/2.0,  -90), 90),
-        lng: Math.min(Math.max(bound.northEast.lng+dlng/2.0, -180), 180)
+        lat: Math.min(Math.max(bound.northEast.lat+(dlat/2.0)*scale,  -90), 90),
+        lng: Math.min(Math.max(bound.northEast.lng+(dlng/2.0)*scale, -180), 180)
       },
       southWest: {
-        lat: Math.min(Math.max(bound.southWest.lat-dlat/2.0, -90), 90),
-        lng: Math.min(Math.max(bound.southWest.lng-dlng/2.0,  -180), 180)
+        lat: Math.min(Math.max(bound.southWest.lat-(dlat/2.0)*scale, -90), 90),
+        lng: Math.min(Math.max(bound.southWest.lng-(dlng/2.0)*scale,  -180), 180)
       }
     }
   }
