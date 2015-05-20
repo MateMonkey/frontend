@@ -194,10 +194,6 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
     {
       displayText: "kg",
       value: "kg"
-    },
-    {
-      displayText: "Unknown",
-      value: "unknown"
     }
   ];
 
