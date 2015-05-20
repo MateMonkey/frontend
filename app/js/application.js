@@ -15,6 +15,7 @@ var app = angular.module('matemonkey',
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   $routeProvider.otherwise({redirectTo: '/map'});
   $locationProvider.hashPrefix('!');
+  $locationProvider.html5Mode(true);
 }])
 .config(['$translateProvider', function($translateProvider) {
   $translateProvider.translations('en', {
