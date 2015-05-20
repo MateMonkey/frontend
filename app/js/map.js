@@ -264,7 +264,7 @@ angular.module('matemonkey.map',
   });
 
   $scope.$on('DealerCreated', function(event, d) {
-    angular.extend($scope.markers, $scope.dealerToMarker([d]));
+    $scope.loadDealers(true);
     $scope.focusOnDealer(d);
   });
 
