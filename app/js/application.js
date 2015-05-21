@@ -13,7 +13,7 @@ var app = angular.module('matemonkey',
                             'matemonkey.legal'
                          ])
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
-  $routeProvider.otherwise({redirectTo: '/map'});
+  $routeProvider.otherwise({redirectTo: '/map/dealer'});
   $locationProvider.hashPrefix('!');
   $locationProvider.html5Mode(true);
 }])

@@ -7,12 +7,7 @@ angular.module('matemonkey.map',
                  'leaflet-directive'
                ])
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/map', {
-    templateUrl: 'templates/map/view.html',
-    controller: 'MapController',
-    reloadOnSearch: false
-  });
-  $routeProvider.when('/map/dealer/:dealer_slug', {
+  $routeProvider.when('/map/dealer/:dealer_slug?', {
     templateUrl: 'templates/map/view.html',
     controller: 'MapController',
     reloadOnSearch: false
