@@ -122,7 +122,7 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
       value: "club"
     },
     {
-      displayText: "Bar",
+      displayText: "Bar/Café",
       value: "bar"
     },
     {
