@@ -93,6 +93,19 @@ var app = angular.module('matemonkey',
     return Date.parse(input);
   }
 })
+.filter('fixhttp', function() {
+  return function(input) {
+    if (input.length > 0) {
+      if (input.indexOf("http://") === 0) {
+        return input;
+      } else {
+        return "http://" + input;
+      }
+    } else {
+      return input;
+    }
+  }
+})
 .directive('ensurefloat', function() {
   return {
     require: 'ngModel',

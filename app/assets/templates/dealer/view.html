@@ -19,7 +19,7 @@
     <span class="glyphicon glyphicon-envelope" aria-hidden="true"></span>
     {{dealer.address.email}}<br>
     <span class="glyphicon glyphicon-share-alt" aria-hidden="true"></span>
-    <a href="{{dealer.address.web}}" target="_blank">{{dealer.address.web}}</a><br>
+    <a href="{{dealer.address.web | fixhttp}}" target="_blank">{{dealer.address.web}}</a><br>
   </address>
   <h4>Note</h4>
   <p>{{dealer.note}}</p>
