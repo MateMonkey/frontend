@@ -3,7 +3,9 @@
 angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap", "dialogs.main", "isoCurrency"])
 .controller('DealerController', ['$scope', '$http', '$route', '$location', 'DealerService', 'dialogs', 'urlfor',
             function($scope, $http, $route, $location, DealerService, dialogs, urlfor) {
-  $scope.showDiscontinued = false;
+  $scope.showDiscontinued = {
+    value: false
+  };
   $scope.reloadStock = function() {
     $http({
       method: "GET",
@@ -13,6 +15,13 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
       }
     }).success(function(data) {
       $scope.stock = data['entries'];
+      var showDiscontinued = true
+      angular.forEach($scope.stock, function(entry, key) {
+        if (entry.status !== 'discontinued') {
+          showDiscontinued = false;
+        }
+      });
+      $scope.showDiscontinued.value = showDiscontinued;
     }).error(function(data) {
       $scope.stock = {};
     });
