@@ -71,10 +71,11 @@
       <span ng-show="form.addressEmail.$invalid ">Invalid Email Address.</span>
     </div>
   </div>
-  <div class="form-group">
+  <div class="form-group" ng-class="{'has-error': form.addressWeb.$invalid }" >
     <label for="addressWeb" class="col-sm-2 control-label">Web</label>
     <div class="col-sm-6">
-      <input class="form-control" id="addressWeb" type="url" ng-model="dealer.address.web" />
+      <input class="form-control" id="addressWeb" name="addressWeb" type="url" ng-model="dealer.address.web" />
+      <span ng-show="form.addressWeb.$invalid ">Invalid URL (have you forgot http(s):// ?).</span>
     </div>
   </div>
 </form>
