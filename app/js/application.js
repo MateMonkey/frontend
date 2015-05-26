@@ -95,8 +95,11 @@ var app = angular.module('matemonkey',
 })
 .filter('fixhttp', function() {
   return function(input) {
+    if (!angular.isString(input)) {
+      return input;
+    }
     if (input.length > 0) {
-      if (input.indexOf("http://") === 0) {
+      if (input.indexOf("http") === 0) {
         return input;
       } else {
         return "http://" + input;
