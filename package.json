@@ -1,8 +1,9 @@
 {
-  "name": "your-app",
-  "description": "Description",
-  "author": "Your Name",
+  "name": "ngMateMonkey",
+  "description": "The AngularJS Frontend for matemonkey.com",
+  "author": "Maximilian Güntner",
   "version": "0.0.1",
+  "private": true,
   "repository": {
     "type": "git",
     "url": ""
