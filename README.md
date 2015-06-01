@@ -13,7 +13,8 @@ This project uses [Brunch](http://brunch.io) to build the final product.
 * Install nodejs
 * Install brunch (e.g. using npm)
 * Install bower (e.g. using npm)
-* Install all dependencies by running `bower install`
+* Install all development dependencies by running `npm install`
+* Install all source dependencies by running `bower install`
 * Start your local server by running `brunch watch --server`
 
 ### API
