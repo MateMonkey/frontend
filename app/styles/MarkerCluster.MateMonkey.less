@@ -1,0 +1,46 @@
+@cluster-small-bg: lighten(@navbar-default-bg, 10%);
+@cluster-medium-bg: lighten(@navbar-default-bg, 5%);
+@cluster-large-bg: @navbar-default-bg;
+
+@cluster-small-border: lighten(@cluster-small-bg, 20%);
+@cluster-medium-border: lighten(@cluster-medium-bg, 20%);
+@cluster-large-border: lighten(@cluster-large-bg, 20%);
+
+.marker-cluster-small {
+  background-color: fade(@cluster-small-bg, 60%);
+}
+.marker-cluster-small div {
+  background-color: fade(@cluster-small-border, 60%);
+}
+
+.marker-cluster-medium {
+  background-color: fade(@cluster-medium-bg, 60%);
+}
+.marker-cluster-medium div {
+  background-color: fade(@cluster-medium-border, 60%);
+}
+
+.marker-cluster-large {
+  background-color: fade(@cluster-medium-bg, 60%);
+}
+.marker-cluster-large div {
+  background-color: fade(@cluster-medium-border, 60%);
+}
+
+.marker-cluster {
+  background-clip: padding-box;
+  border-radius: 20px;
+}
+.marker-cluster div {
+  width: 30px;
+  height: 30px;
+  margin-left: 5px;
+  margin-top: 5px;
+
+  text-align: center;
+  border-radius: 15px;
+  font: 12px "Helvetica Neue", Arial, Helvetica, sans-serif;
+ }
+.marker-cluster span {
+  line-height: 30px;
+}

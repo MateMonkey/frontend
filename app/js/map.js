@@ -198,7 +198,11 @@ angular.module('matemonkey.map',
         dealers: {
           name: 'dealers',
           type: 'markercluster',
-          visible: true
+          visible: true,
+          layerOptions: {
+            showCoverageOnHover: false,
+            disableClusteringAtZoom: 14
+          }
         }
       }
     },
