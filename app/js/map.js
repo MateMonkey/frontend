@@ -15,8 +15,8 @@ angular.module('matemonkey.map',
 }])
 
 .controller('MapController', [
-  '$scope', '$http', '$routeParams', '$timeout', 'DealerService', 'MapService', 'screenSize', 'leafletData', 'leafletBoundsHelpers', 'urlfor',
-  function($scope, $http, $routeParams, $timeout, DealerService, MapService, screenSize, leafletData, leafletBoundsHelpers, urlfor) {
+  '$scope', '$http', '$routeParams', '$route', '$timeout', 'DealerService', 'MapService', 'screenSize', 'leafletData', 'leafletBoundsHelpers', 'urlfor',
+  function($scope, $http, $routeParams, $route, $timeout, DealerService, MapService, screenSize, leafletData, leafletBoundsHelpers, urlfor) {
 
   $scope.ready = false;
   $scope.requestInProgress = false;
@@ -115,33 +115,6 @@ angular.module('matemonkey.map',
       });
   };
 
-  if ($routeParams.hasOwnProperty('dealer_slug')) {
-    $http({
-      url: urlfor.get("dealersSlug", $routeParams.dealer_slug),
-      method: "GET"
-    }).success(function(dealer) {
-      DealerService.select(dealer);
-      $scope.focusOnDealer(dealer);
-      $scope.ready = true;
-    }).error(function() {
-      angular.extend($scope, {
-        center: {
-          zoom: 12,
-          autoDiscover: true
-        }
-      });
-      $scope.ready = true;
-    });
-  } else {
-    angular.extend($scope, {
-      center: {
-        zoom: 12,
-        autoDiscover: true
-      }
-    });
-    $scope.ready = true;
-  }
-
   angular.extend($scope, {
     icons: {
       retail : {
@@ -215,20 +188,81 @@ angular.module('matemonkey.map',
       },
       minZoom: minZoom,
       center: {
-        lat: 48.13722,
-        lng: 11.575556,
-        zoom: 12
+        lat: 0,
+        lng: 0,
+        autoDiscover: false
       }
     }
   });
 
-  $scope.$on('leafletDirectiveMarker.click', function (e, args) {
+
+  $scope.focusOnLocation = function() {
+    if ($routeParams.hasOwnProperty('@')) {
+      var atRegex = /(\d{1,2}),(-?\d+\.\d+),(-?\d+\.\d+)/;
+      var result = $routeParams['@'].match(atRegex);
+      if (result != null) {
+        var zoom = parseInt(result[1]);
+        var lat = parseFloat(result[2]);
+        var lon = parseFloat(result[3]);
+        angular.extend($scope.center,
+        {
+          zoom: zoom,
+          lat: lat,
+          lng: lon,
+        });
+        return true;
+      } else {
+        return false;
+      }
+    } else {
+      return false;
+    }
+  }
+
+  if ($routeParams.hasOwnProperty('dealer_slug')) {
+    $http({
+      url: urlfor.get("dealersSlug", $routeParams.dealer_slug),
+      method: "GET"
+    }).success(function(dealer) {
+      DealerService.select(dealer);
+      if (!$scope.focusOnLocation()) {
+        $scope.focusOnDealer(dealer);
+      }
+      $scope.ready = true;
+    }).error(function() {
+      if (!$scope.focusOnLocation()) {
+        angular.extend($scope, {
+          center: {
+            zoom: 12,
+            lat: 48.13722,
+            lng: 11.575556,
+            autoDiscover: true
+          }
+        });
+      }
+      $scope.ready = true;
+    });
+  } else {
+    if (!$scope.focusOnLocation()) {
+      angular.extend($scope, {
+        center: {
+          zoom: 12,
+          lat: 48.13722,
+          lng: 11.575556,
+          autoDiscover: true
+        }
+      });
+    }
+    $scope.ready = true;
+  }
+
+    $scope.$on('leafletDirectiveMarker.click', function (e, args) {
     DealerService.select(args['model'].dealer);
   });
 
   $scope.$on('FilterChanged',function(event, f) {
     var pCount = 0;
-    $scope.products = ""
+    $scope.products = "";
     angular.forEach(f.product, function(value, key) {
       if (value == true) {
         pCount += 1;
@@ -280,6 +314,9 @@ angular.module('matemonkey.map',
     $scope.loadDealers(true);
   });
   $scope.$watch('bounds', function(newVal, oldVal) {
+    $route.updateParams({'@': $scope.center.zoom + ','
+                          + $scope.center.lat.toFixed(6) + ','
+                          + $scope.center.lng.toFixed(6)});
     if ($scope.ready == true) {
       $scope.loadDealers(false);
     }
