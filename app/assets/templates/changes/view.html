@@ -1,0 +1,13 @@
+<div style="margin-left: 100px; height: 100%" class"container">
+<h1>Recent Changes</h1>
+<div style="overflow-y:auto; height: 90%">
+  <table class="table table-striped" infinite-scroll-parent='true' infinite-scroll='loadMore()' infinite-scroll-distance='2'>
+    <tr ng-repeat='change in changes'>
+      <td>{{change.type | translate}}</td>
+      <td>{{change.dealer_name}}</td>
+      <td><span tooltip="{{change.timestamp}}">{{change.timestamp | date2 | relativeDate }}</span></td>
+      <td><a href="http://matemonkey.com/map/dealer/{{change.slug}}">Go to Dealer</a></td>
+    </tr>
+  </table>
+</div>
+</div>

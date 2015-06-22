@@ -10,7 +10,8 @@ var app = angular.module('matemonkey',
                             'matemonkey.dealer',
                             'matemonkey.filter',
                             'matemonkey.about',
-                            'matemonkey.legal'
+                            'matemonkey.legal',
+                            'matemonkey.changes'
                          ])
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   $routeProvider.otherwise({redirectTo: '/map/dealer'});
@@ -47,7 +48,10 @@ var app = angular.module('matemonkey',
     months_from_now: '{{time}} months from now',
     a_year_from_now: 'a year from now',
     years_from_now: '{{time}} years from now',
-    over_a_year_from_now: 'over a year from now'
+    over_a_year_from_now: 'over a year from now',
+    StockEntryCreated: 'Stock Entry created',
+    DealerCreated: 'Dealer created',
+    DealerUpdated: 'Dealer updated'
   });
   $translateProvider.preferredLanguage('en');
   $translateProvider.useSanitizeValueStrategy(null);
@@ -68,6 +72,8 @@ var app = angular.module('matemonkey',
             return apiConfig.base_url + '/api/v1/products';
           case "search":
             return apiConfig.base_url + '/api/v1/search';
+          case "changes":
+            return apiConfig.base_url + '/api/v1/changes';
         }
         return "";
     }

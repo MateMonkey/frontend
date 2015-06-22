@@ -15,7 +15,8 @@
     "Leaflet.awesome-markers": "*",
     "leaflet": "~0.7.3",
     "bootstrap": "*",
-    "angular-media-queries": "~0.4.0"
+    "angular-media-queries": "~0.4.0",
+    "ngInfiniteScroll": "~1.2.1"
   },
   "authors": [
     "Maximilian Güntner <maximilian.guentner@gmail.com>"
