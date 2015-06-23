@@ -5,7 +5,7 @@ angular.module('matemonkey.about',
                  'ngRoute'
                ])
 .config(['$routeProvider', function($routeProvider) {
-  $routeProvider.when('/about/', {
+  $routeProvider.when('/about', {
     templateUrl: 'templates/about/view.html',
     controller: 'AboutController'
   });
