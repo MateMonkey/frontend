@@ -22,6 +22,8 @@ angular.module('matemonkey.map',
   $scope.requestInProgress = false;
   $scope.showSidebar = !screenSize.is('xs');
   $scope.center = {};
+  $scope.bounds = {};
+
   var minZoom = 10;
   if (!screenSize.is('xs')) {
     minZoom = 5;
@@ -75,7 +77,7 @@ angular.module('matemonkey.map',
 
   $scope.loadDealers = function(force) {
     var requestBounds = angular.copy($scope.bounds);
-    if (requestBounds === undefined) {
+    if (requestBounds === undefined || Object.keys(requestBounds).length === 0) {
       return;
     }
     if ($scope.requestInProgress ==  true) {
@@ -114,7 +116,6 @@ angular.module('matemonkey.map',
         $scope.requestInProgress = false;
       });
   };
-
   angular.extend($scope, {
     icons: {
       retail : {
