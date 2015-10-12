@@ -1,40 +1,40 @@
 <div class="btn-group" role="group" style="margin-bottom: 5px">
-<label class="btn btn-default" ng-model="typeFilterModel.all" tooltip-placement="bottom" tooltip="Everything" tooltip-append-to-body="true" btn-checkbox>
+<label class="btn btn-default" ng-model="typeFilterModel.all" tooltip-placement="bottom" uib-tooltip="Everything" tooltip-append-to-body="true" uib-btn-checkbox>
   <span class="glyphicon glyphicon-asterisk"></span>
 </label>
-<label class="btn btn-default" ng-model="typeFilterModel.retail" tooltip-placement="bottom" tooltip="Retail" tooltip-append-to-body="true" btn-checkbox>
+<label class="btn btn-default" ng-model="typeFilterModel.retail" tooltip-placement="bottom" uib-tooltip="Retail" tooltip-append-to-body="true" uib-btn-checkbox>
   <span class="glyphicon glyphicon-shopping-cart"></span>
 </label>
-<label class="btn btn-default" ng-model="typeFilterModel.restaurant" tooltip-placement="bottom" tooltip="Restaurants" tooltip-append-to-body="true" btn-checkbox>
+<label class="btn btn-default" ng-model="typeFilterModel.restaurant" tooltip-placement="bottom" uib-tooltip="Restaurants" tooltip-append-to-body="true" uib-btn-checkbox>
   <span class="glyphicon glyphicon-cutlery"></span>
 </label>
-<label class="btn btn-default" ng-model="typeFilterModel.bar" tooltip-placement="bottom" tooltip="Bars/Cafés" tooltip-append-to-body="true" btn-checkbox>
+<label class="btn btn-default" ng-model="typeFilterModel.bar" tooltip-placement="bottom" uib-tooltip="Bars/Cafés" tooltip-append-to-body="true" uib-btn-checkbox>
   <span class="glyphicon glyphicon-glass"></span>
 </label>
-<label class="btn btn-default" ng-model="typeFilterModel.club" tooltip-placement="bottom" tooltip="Clubs" tooltip-append-to-body="true" btn-checkbox>
+<label class="btn btn-default" ng-model="typeFilterModel.club" tooltip-placement="bottom" uib-tooltip="Clubs" tooltip-append-to-body="true" uib-btn-checkbox>
   <span class="glyphicon glyphicon-cd"></span>
 </label>
-<label class="btn btn-default" ng-model="typeFilterModel.community" tooltip-placement="bottom" tooltip="Community" tooltip-append-to-body="true" btn-checkbox>
+<label class="btn btn-default" ng-model="typeFilterModel.community" tooltip-placement="bottom" uib-tooltip="Community" tooltip-append-to-body="true" uib-btn-checkbox>
   <span class="glyphicon glyphicon-user"></span>
 </label>
-<label class="btn btn-default" ng-model="typeFilterModel.hackerspace" tooltip-placement="bottom" tooltip="Hackerspaces" tooltip-append-to-body="true" btn-checkbox>
+<label class="btn btn-default" ng-model="typeFilterModel.hackerspace" tooltip-placement="bottom" uib-tooltip="Hackerspaces" tooltip-append-to-body="true" uib-btn-checkbox>
   <span class="glyphicon icon-glider"></span>
 </label>
-<label class="btn btn-default" ng-model="typeFilterModel.other" tooltip-placement="bottom" tooltip="Other" tooltip-append-to-body="true" btn-checkbox>
+<label class="btn btn-default" ng-model="typeFilterModel.other" tooltip-placement="bottom" uib-tooltip="Other" tooltip-append-to-body="true" uib-btn-checkbox>
   <span class="glyphicon glyphicon-info-sign"></span>
 </label>
 </div>
 
-<accordion id="filterAccordion">
-<accordion-group is-open="productFilterOpen">
-  <accordion-heading>
+<uib-accordion id="filterAccordion">
+<uib-accordion-group is-open="productFilterOpen">
+  <uib-accordion-heading>
     Filter Products<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': status.open, 'glyphicon-chevron-right': !status.open}"></i>
-  </accordion-heading>
+  </uib-accordion-heading>
     <div class="container-fluid">
       <div class="pull-left" ng-repeat="product in products">
-        <button type="button" class="btn btn-default" ng-model="productFilterModel[product.id]" btn-checkbox>
+        <button type="button" class="btn btn-default" ng-model="productFilterModel[product.id]" uib-btn-checkbox>
           {{product.name}}
         </button>
       </div>
     </div>
-</accordion>
+</uib-accordion>

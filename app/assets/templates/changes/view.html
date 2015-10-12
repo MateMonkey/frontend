@@ -6,7 +6,7 @@
       <td>{{change.type | translate}}</td>
       <td>{{change.dealer_name}}</td>
       <td>{{change.address_summary}}</td>
-      <td><span tooltip="{{change.timestamp}}">{{change.timestamp | date2 | relativeDate }}</span></td>
+      <td><span uib-tooltip="{{change.timestamp}}">{{change.timestamp | date2 | relativeDate }}</span></td>
       <td><a href="http://matemonkey.com/map/dealer/{{change.slug}}">Go to Dealer</a></td>
     </tr>
   </table>
