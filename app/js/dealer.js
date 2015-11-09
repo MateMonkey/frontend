@@ -1,11 +1,12 @@
 'use strict';
 
-angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap", "dialogs.main", "isoCurrency"])
+angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap", "dialogs.main", "isoCurrency", "leaflet-directive"])
 .controller('DealerController', ['$scope', '$http', '$route', '$location', 'DealerService', 'dialogs', 'urlfor',
             function($scope, $http, $route, $location, DealerService, dialogs, urlfor) {
   $scope.showDiscontinued = {
     value: false
   };
+
   $scope.reloadStock = function() {
     $http({
       method: "GET",
@@ -99,6 +100,15 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
 
   $scope.showEditDealer = function() {
     var dlg = dialogs.create('templates/dealer/edit_dealer.html', 'EditDealerController', angular.copy($scope.dealer), 'lg');
+    dlg.result.then(function(data) {
+      if (data.save == true) {
+        $scope.updateDealer(data.dealer);
+      }
+    });
+  };
+
+  $scope.showLocationSetter = function() {
+    var dlg = dialogs.create('templates/dealer/change_location.html', 'ChangeLocationController', angular.copy($scope.dealer), 'lg');
     dlg.result.then(function(data) {
       if (data.save == true) {
         $scope.updateDealer(data.dealer);
@@ -211,6 +221,61 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
   })
   $scope.dealer = data;
   $scope.stock = {};
+
+  $scope.save = function() {
+    $modalInstance.close({save: true , dealer: $scope.dealer, stock: $scope.stock});
+  };
+  $scope.cancel = function(){
+    $modalInstance.close({save: false, dealer: null, stock: null});
+  };
+}])
+.controller('ChangeLocationController', ['$scope', '$http', '$modalInstance', 'data', 'urlfor',
+            function($scope, $http, $modalInstance, data, urlfor) {
+  $scope.dealer = data;
+  $scope.title = "Change Position of " + $scope.dealer.name;
+
+  angular.extend($scope, {
+    layers: {
+      baselayers: {
+          osm: {
+            name: 'OSM',
+            type: 'xyz',
+            url: 'http://otile{s}.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
+            layerParams: {
+              noWrap: true,
+              subdomains: '1234',
+              attribution: "© <a href=\"http://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a> contributors | Tiles Courtesy of <a href=\"http://www.mapquest.com/\" target=\"_blank\">MapQuest</a> <img src=\"http://developer.mapquest.com/content/osm/mq_logo.png\">",
+              prefix: false
+            }
+          }
+      }
+    },
+    center: {
+      lat: angular.copy($scope.dealer.address.lat),
+      lng: angular.copy($scope.dealer.address.lon),
+      zoom: 16
+    },
+    markers: {
+      dealer: {
+        lat: $scope.dealer.address.lat,
+        lng: $scope.dealer.address.lon,
+        draggable: true
+      }
+    },
+    defaults: {
+      zoomControlPosition: 'topright',
+      controls: {
+        layers: {
+          visible: false,
+        }
+      }
+    }
+  });
+
+  $scope.$on('leafletDirectiveMarker.dragend', function(event, o) {
+    $scope.dealer.address.lat = o.model.lat
+    $scope.dealer.address.lon = o.model.lng
+  });
 
   $scope.save = function() {
     $modalInstance.close({save: true , dealer: $scope.dealer, stock: $scope.stock});
