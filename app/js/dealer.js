@@ -253,7 +253,7 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
     center: {
       lat: angular.copy($scope.dealer.address.lat),
       lng: angular.copy($scope.dealer.address.lon),
-      zoom: 16
+      zoom: 18
     },
     markers: {
       dealer: {
