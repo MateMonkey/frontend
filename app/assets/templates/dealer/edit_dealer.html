@@ -30,11 +30,10 @@
       <span ng-show="form.addressStreet.$invalid">Please enter a street.</span>
     </div>
   </div>
-  <div class="form-group" ng-class="{'has-error': form.addressNumber.$invalid }" >
+  <div class="form-group">
     <label for="addressNumber" class="col-sm-2 control-label">Number</label>
     <div class="col-sm-6">
-      <input class="form-control" id="addressNumber" name="addressNumber" type="text" ng-model="dealer.address.number" required/>
-      <span ng-show="form.addressNumber.$invalid">Please enter a housenumber.</span>
+      <input class="form-control" id="addressNumber" type="text" ng-model="dealer.address.number" />
     </div>
   </div>
   <div class="form-group" ng-class="{'has-error': form.addressPostal.$invalid }" >
