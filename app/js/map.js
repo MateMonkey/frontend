@@ -15,9 +15,11 @@ angular.module('matemonkey.map',
 }])
 
 .controller('MapController', [
-  '$scope', '$http', '$routeParams', '$route', '$timeout', 'DealerService', 'MapService', 'screenSize', 'leafletData', 'leafletBoundsHelpers', 'urlfor',
-  function($scope, $http, $routeParams, $route, $timeout, DealerService, MapService, screenSize, leafletData, leafletBoundsHelpers, urlfor) {
+  '$scope', '$rootScope', '$http', '$routeParams', '$route', '$timeout', 'DealerService', 'MapService', 'screenSize', 'leafletData', 'leafletBoundsHelpers', 'urlfor',
+  function($scope, $rootScope, $http, $routeParams, $route, $timeout, DealerService, MapService, screenSize, leafletData, leafletBoundsHelpers, urlfor) {
 
+  $rootScope.title = "Map";
+  $rootScope.pageDescription = "Look up the current stock and prices of mate drinks on MateMonkey.com";
   $scope.ready = false;
   $scope.requestInProgress = false;
   $scope.showSidebar = !screenSize.is('xs');

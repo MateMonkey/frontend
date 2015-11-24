@@ -11,11 +11,14 @@ angular.module('matemonkey.changes',
     controller: 'ChangesController'
   });
 }])
-.controller('ChangesController', ['$scope', '$http', 'urlfor', function($scope, $http, urlfor) {
+.controller('ChangesController', ['$scope', '$rootScope', '$http', 'urlfor', function($scope, $rootScope, $http, urlfor) {
   $scope.changes = []
   $scope.isBusy = false;
   $scope.isEnd = false;
   $scope.page = 1;
+
+  $rootScope.title = "Recent Changes";
+  $rootScope.pageDescription = "The latest changes on MateMonkey.com, a service to look up the current stock and prices of mate drinks in your area.";
 
   $scope.loadMore = function() {
     if ($scope.isEnd) return;

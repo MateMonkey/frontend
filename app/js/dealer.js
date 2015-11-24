@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap", "dialogs.main", "isoCurrency", "leaflet-directive"])
-.controller('DealerController', ['$scope', '$http', '$route', '$location', 'DealerService', 'dialogs', 'urlfor',
-            function($scope, $http, $route, $location, DealerService, dialogs, urlfor) {
+.controller('DealerController', ['$scope', '$rootScope', '$http', '$route', '$location', 'DealerService', 'dialogs', 'urlfor',
+            function($scope, $rootScope, $http, $route, $location, DealerService, dialogs, urlfor) {
   $scope.showDiscontinued = {
     value: false
   };
@@ -34,6 +34,10 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
     $route.current.pathParams['dealer_slug'] = d.slug;
     $location.path('/map/dealer/'+d.slug);
     $scope.reloadStock();
+    $rootScope.title = d.name + " | " + d.address.city;
+    $rootScope.pageDescription = "Look up the current stock and prices of mate drinks on MateMonkey.com for " +
+      d.name + ", " + d.address.street + " " + d.address.number + " in " +
+      d.address.city;
   }
 
   $scope.$on('DealerSelected', function(event, d) {

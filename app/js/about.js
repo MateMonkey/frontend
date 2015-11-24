@@ -10,8 +10,7 @@ angular.module('matemonkey.about',
     controller: 'AboutController'
   });
 }])
-.controller('AboutController', ['$scope', function($scope) {
-
+.controller('AboutController', ['$scope', '$rootScope', function($scope, $rootScope) {
+  $rootScope.title = "About";
+  $rootScope.pageDescription = "About MateMonkey.com, a service to find mate dealers in your area.";
 }]);
-
-

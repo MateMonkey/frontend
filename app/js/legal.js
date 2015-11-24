@@ -10,6 +10,7 @@ angular.module('matemonkey.legal',
     controller: 'LegalController'
   });
 }])
-.controller('LegalController', ['$scope', function($scope) {
-
+.controller('LegalController', ['$scope', '$rootScope', function($scope, $rootScope) {
+  $rootScope.title = "Legal/Imprint";
+  $rootScope.pageDescription = "Legal information for MateMonkey.com, a service to look up the current stock and prices of mate drinks in your area.";
 }]);
