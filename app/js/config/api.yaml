@@ -1,5 +1,5 @@
 development:
-  base_url: http://playground.matemonkey.com
+  base_url: https://playground.matemonkey.com
 
 production:
-  base_url: http://matemonkey.com
+  base_url: https://matemonkey.com
