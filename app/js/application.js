@@ -11,7 +11,8 @@ var app = angular.module('matemonkey',
                             'matemonkey.filter',
                             'matemonkey.about',
                             'matemonkey.legal',
-                            'matemonkey.changes'
+                            'matemonkey.changes',
+                            'matemonkey.links'
                          ])
 .config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider) {
   $routeProvider.otherwise({redirectTo: '/map/dealer'});
