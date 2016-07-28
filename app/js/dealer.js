@@ -244,11 +244,11 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
           osm: {
             name: 'OSM',
             type: 'xyz',
-            url: 'https://otile{s}-s.mqcdn.com/tiles/1.0.0/osm/{z}/{x}/{y}.jpg',
+            url: 'https:///tiles{s}.freifunk-jena.de/{z}/{x}/{y}.png',
             layerParams: {
               noWrap: true,
               subdomains: '1234',
-              attribution: "© <a href=\"http://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a> contributors | Tiles Courtesy of <a href=\"http://www.mapquest.com/\" target=\"_blank\">MapQuest</a> <img src=\"https://developer.mapquest.com/content/osm/mq_logo.png\">",
+              attribution: "© <a href=\"http://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a> contributors | Tiles Courtesy of <a href=\"https://github.com/egon0\" target=\"_blank\">egon0</a>",
               prefix: false
             }
           }
