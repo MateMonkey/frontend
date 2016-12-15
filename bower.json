@@ -1,5 +1,5 @@
 {
-  "name": "ngMateMonkey",
+  "name": "ng-matemonkey",
   "version": "0.0.1",
   "main": "public/app.js",
   "dependencies": {
@@ -20,7 +20,7 @@
     "ngInfiniteScroll": "~1.2.1"
   },
   "authors": [
-    "Maximilian Güntner <maximilian.guentner@gmail.com>"
+    "Maximilian Güntner <admin@matemonkey.com>"
   ],
   "description": "Angular Frontend for matemonkey.com",
   "license": "GPL",
