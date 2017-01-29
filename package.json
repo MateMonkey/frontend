@@ -13,12 +13,14 @@
     "test": "brunch test"
   },
   "dependencies": {
-    "auto-reload-brunch": ">= 1.0 < 1.8",
-    "clean-css-brunch": ">= 1.0 < 1.8",
+    "auto-reload-brunch": "^2.7.1",
+    "bower": "^1.8.0",
+    "brunch": "^2.10.5",
+    "clean-css-brunch": "^2.0.0",
     "constangular-brunch": "^0.1.4",
-    "css-brunch": ">= 1.0 < 1.8",
-    "less-brunch": "latest",
-    "javascript-brunch": ">= 1.0 < 1.8",
-    "uglify-js-brunch": ">= 1.0 < 1.8"
+    "css-brunch": "^2.6.1",
+    "javascript-brunch": "^2.0.0",
+    "less-brunch": "^2.7.1",
+    "uglify-js-brunch": "^2.0.1"
   }
 }

@@ -12,7 +12,7 @@
     "angular-translate": "~2.7.0",
     "iso-currency": "0.1.5",
     "leaflet.markercluster": "v0.4.0-hotfix.1",
-    "Leaflet.awesome-markers": "*",
+    "Leaflet.awesome-markers": "2.0.2",
     "leaflet": "~0.7.3",
     "bootstrap": "*",
     "angular-media-queries": "~0.4.0",

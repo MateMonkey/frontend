@@ -1,7 +1,8 @@
 exports.config =
+  npm:
+    enabled: false
   files:
     javascripts:
-      defaultExtension: 'js'
       joinTo:
         'js/app.js': /^app\/js/
         'js/vendor.js': /^bower_components/
@@ -14,11 +15,17 @@ exports.config =
       joinTo:
         'css/app.css': 'app/styles/bootstrap.less'
         'css/vendor.css': /^bower_components/
-      before: [
-        'app/styles/bootstrap.less'
-      ]
+      order:
+        before: [
+          'app/styles/bootstrap.less'
+        ]
     templates:
       joinTo: 'app.js'
+  paths:
+    watched: [
+               'app/assets'
+               'app/js'
+             ]
   modules:
     wrapper: false
     definition: false
