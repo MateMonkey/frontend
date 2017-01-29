@@ -164,7 +164,7 @@ angular.module('matemonkey.map',
           url: 'https:///tiles{s}.freifunk-jena.de/{z}/{x}/{y}.png',
           layerParams: {
             noWrap: true,
-            subdomains: '123456789',
+            subdomains: '01234',
             attribution: "© <a href=\"http://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a> contributors | Tiles Courtesy of <a href=\"https://github.com/egon0\" target=\"_blank\">egon0</a>",
             prefix: false
           }
