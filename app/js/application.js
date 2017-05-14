@@ -132,7 +132,7 @@ var app = angular.module('matemonkey',
     }
   }
 })
-.run(['$rootScope', function($rootScope) {
+.run(['$rootScope', '$location', function($rootScope, $location) {
   $rootScope.utils = {
     compareBounds: function(a,b) {
       if ((a.northEast.lat > b.northEast.lat) |
@@ -161,6 +161,8 @@ var app = angular.module('matemonkey',
       }
     }
   }
-  }
-
+  };
+  $rootScope.fullURL = function() {
+    return $location.absUrl();
+  };
 }]);
