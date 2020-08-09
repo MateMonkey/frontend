@@ -16,7 +16,7 @@
     "leaflet": "~0.7.3",
     "bootstrap": "*",
     "angular-media-queries": "~0.4.0",
-    "components-font-awesome": "*",
+    "components-font-awesome": "4.2.0",
     "ngInfiniteScroll": "~1.2.1"
   },
   "authors": [

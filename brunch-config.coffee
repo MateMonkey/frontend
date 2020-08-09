@@ -24,10 +24,14 @@ exports.config =
   paths:
     watched: [
                'app/assets'
+               'app/styles/bootstrap.less'
                'app/js'
              ]
   modules:
     wrapper: false
     definition: false
+  plugins:
+    css:
+      modules: false
   conventions:
     ignored: (path) -> /^bower_components\/(bootstrap|jquery)\//.test path
