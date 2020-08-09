@@ -16,7 +16,7 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
       }
     }).success(function(data) {
       $scope.stock = data['entries'];
-      var showDiscontinued = true
+      var showDiscontinued = true;
       angular.forEach($scope.stock, function(entry, key) {
         if (entry.status !== 'discontinued') {
           showDiscontinued = false;
@@ -38,7 +38,7 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
     $rootScope.pageDescription = "Look up the current stock and prices of mate drinks on MateMonkey.com for " +
       d.name + ", " + d.address.street + " " + d.address.number + " in " +
       d.address.city;
-  }
+  };
 
   $scope.$on('DealerSelected', function(event, d) {
     $scope.setDealer(d);
@@ -46,13 +46,13 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
 
 
   $scope.updateStock = function(dealer, stock) {
-    var data = null
+    var data = null;
     if ((typeof stock.price == "undefined")) {
       data = {
         status: stock.status,
         product: stock.product,
         quantity: stock.quantity
-      }
+      };
     } else {
       data = {
         status: stock.status,
@@ -60,7 +60,7 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
         price: parseFloat(stock.price)*100,
         quantity: stock.quantity,
         special: stock.special
-      }
+      };
     }
     $http({
       url: urlfor.get("stock", dealer.id),
@@ -80,7 +80,7 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
       $scope.setDealer(data);
       DealerService.update(data);
     });
-  }
+  };
 
   $scope.createDealer = function(dealer) {
     $http({
@@ -91,7 +91,7 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
       $scope.setDealer(data);
       DealerService.create(data);
     });
-  }
+  };
 
   $scope.showUpdateStock = function() {
     var dlg = dialogs.create('templates/dealer/update_stock.html', 'UpdateStockController', $scope.dealer, 'lg');
@@ -168,7 +168,7 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
 
   if (data == null) {
     $scope.dealer = {};
-    $scope.title = "Create new dealer"
+    $scope.title = "Create new dealer";
   } else {
     $scope.dealer = data;
     $scope.title = "Update " + $scope.dealer.name;
@@ -222,7 +222,7 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
 
   $http.get(urlfor.get("products")).success(function(data) {
     $scope.products = data['products'];
-  })
+  });
   $scope.dealer = data;
   $scope.stock = {};
 
@@ -270,15 +270,15 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
       zoomControlPosition: 'topright',
       controls: {
         layers: {
-          visible: false,
+          visible: false
         }
       }
     }
   });
 
   $scope.$on('leafletDirectiveMarker.dragend', function(event, o) {
-    $scope.dealer.address.lat = o.model.lat
-    $scope.dealer.address.lon = o.model.lng
+    $scope.dealer.address.lat = o.model.lat;
+    $scope.dealer.address.lon = o.model.lng;
   });
 
   $scope.save = function() {
