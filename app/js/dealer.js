@@ -33,7 +33,7 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
     $scope.dealer.currencyCode = "EUR";
     /* Hack for isoCurrency */
     var currencies = iso4217.getCurrencies();
-    for (const key in currencies) {
+    for (var key in currencies) {
       if (currencies[key].symbol === $scope.dealer.currency) {
         $scope.dealer.currencyCode = key;
         break;
