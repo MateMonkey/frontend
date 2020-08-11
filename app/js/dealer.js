@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap", "dialogs.main", "isoCurrency", "leaflet-directive"])
-.controller('DealerController', ['$scope', '$rootScope', '$http', '$route', '$location', 'DealerService', 'dialogs', 'urlfor',
-            function($scope, $rootScope, $http, $route, $location, DealerService, dialogs, urlfor) {
+  .controller('DealerController', ['$scope', '$rootScope', '$http', '$route', '$location', 'DealerService', 'dialogs', 'urlfor', 'iso4217',
+                                   function($scope, $rootScope, $http, $route, $location, DealerService, dialogs, urlfor, iso4217) {
   $scope.showDiscontinued = {
     value: false
   };
@@ -30,6 +30,15 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
 
   $scope.setDealer = function(d) {
     $scope.dealer = d;
+    $scope.dealer.currencyCode = "EUR";
+    /* Hack for isoCurrency */
+    var currencies = iso4217.getCurrencies();
+    for (const key in currencies) {
+      if (currencies[key].symbol === $scope.dealer.currency) {
+        $scope.dealer.currencyCode = key;
+        break;
+      }
+    }
     /* Hack to prevent angular from reloading the page */
     $route.current.pathParams['dealer_slug'] = d.slug;
     $location.path('/map/dealer/'+d.slug);
