@@ -253,11 +253,11 @@ angular.module('matemonkey.dealer',["ngSanitize", "relativeDate", "ui.bootstrap"
           osm: {
             name: 'OSM',
             type: 'xyz',
-            url: 'https:///tiles{s}.freifunk-jena.de/{z}/{x}/{y}.png',
+            url: 'https://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png',
             layerParams: {
               noWrap: true,
-              subdomains: '01234',
-              attribution: "© <a href=\"http://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a> contributors | Tiles Courtesy of <a href=\"https://github.com/egon0\" target=\"_blank\">egon0</a>",
+              subdomains: 'abc',
+              attribution: "© <a href=\"http://www.openstreetmap.org/copyright\" target=\"_blank\">OpenStreetMap</a> contributors | Tiles Courtesy of <a href=\"https://www.openstreetmap.de/\" target=\"_blank\">https://openstreetmap.de</a>",
               prefix: false
             }
           }
