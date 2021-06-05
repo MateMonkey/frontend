@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "auto-reload-brunch": "2.7.1",
-    "bower": "1.8.0",
+    "bower": "1.8.8",
     "brunch": "2.10.5",
     "clean-css-brunch": "2.0.0",
     "constangular-brunch": "0.1.4",
